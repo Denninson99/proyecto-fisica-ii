@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Proyecto Final Física II</title>
+
+  <!-- Librería p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    nav {
+      background: #111827;
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 10px;
+      text-decoration: none;
+    }
+
+    section {
+      background: white;
+      width: 85%;
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+    }
+
+    #simulacion-ohm {
+      margin-top: 20px;
+    }
+
+    canvas {
+      border: 2px solid #ddd;
+      border-radius: 10px;
+    }
+
+    footer {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Proyecto Final de Física II</h1>
+  <p>Simulaciones interactivas con apoyo de inteligencia artificial</p>
+</header>
+
+<nav>
+  <a href="#ohm">Ley de Ohm</a>
+</nav>
+
+<section id="ohm">
+  <h2>Simulación 1: Corriente eléctrica y Ley de Ohm</h2>
+
+  <p>
+    Esta simulación muestra cómo cambia la corriente eléctrica cuando se modifica
+    el voltaje o la resistencia.
+  </p>
+
+  <p>
+    Fórmula utilizada:
+    <strong>I = V / R</strong>
+  </p>
+
+  <p>
+    Donde V es el voltaje en voltios, R es la resistencia en ohmios e I es la corriente en amperios.
+  </p>
+
+  <div id="simulacion-ohm"></div>
+</section>
+
+<footer>
+  <p>Proyecto elaborado por el grupo de Física II.</p>
+</footer>
+
+<script>
+let voltajeSlider;
+let resistenciaSlider;
+
+function setup() {
+  let canvas = createCanvas(750, 420);
+  canvas.parent("simulacion-ohm");
+
+  voltajeSlider = createSlider(1, 20, 10, 1);
+  voltajeSlider.parent("simulacion-ohm");
+
+  resistenciaSlider = createSlider(1, 20, 5, 1);
+  resistenciaSlider.parent("simulacion-ohm");
+}
+
+function draw() {
+  background(245);
+
+  let V = voltajeSlider.value();
+  let R = resistenciaSlider.value();
+  let I = V / R;
+  let P = V * I;
+
+  fill(0);
+  noStroke();
+  textSize(24);
+  text("Ley de Ohm", 40, 40);
+
+  textSize(16);
+  text("Voltaje V = " + V + " V", 40, 90);
+  text("Resistencia R = " + R + " Ω", 40, 120);
+  text("Corriente I = " + I.toFixed(2) + " A", 40, 150);
+  text("Potencia P = " + P.toFixed(2) + " W", 40, 180);
+
+  text("Mover controles:", 40, 240);
+  text("Voltaje", 40, 285);
+  text("Resistencia", 40, 325);
+
+  // Circuito
+  stroke(0);
+  strokeWeight(3);
+  noFill();
+
+  line(420, 120, 620, 120);
+  line(620, 120, 620, 300);
+  line(620, 300, 420, 300);
+  line(420, 300, 420, 120);
+
+  // Resistencia
+  rect(500, 90, 80, 60);
+
+  // Batería
+  line(405, 190, 435, 190);
+  line(412, 220, 428, 220);
+
+  // Flecha de corriente
+  line(470, 300, 550, 300);
+  line(550, 300, 535, 290);
+  line(550, 300, 535, 310);
+
+  noStroke();
+  fill(0);
+  textSize(16);
+  text("R", 535, 125);
+  text("Batería", 360, 245);
+  text("I", 505, 330);
+
+  textSize(14);
+  text("Si aumenta V, aumenta I", 420, 360);
+  text("Si aumenta R, disminuye I", 420, 385);
+}
+</script>
+
+</body>
+</html>
