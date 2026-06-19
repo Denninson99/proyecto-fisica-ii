@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Proyecto Final Física II</title>
 
-  <!-- Librería p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
   <style>
@@ -13,51 +12,107 @@
       font-family: Arial, sans-serif;
       background: #eef2f7;
       color: #222;
+      line-height: 1.5;
     }
 
     header {
-      background: #1f2937;
+      background: #111827;
       color: white;
       text-align: center;
-      padding: 30px;
+      padding: 35px 20px;
+    }
+
+    header h1 {
+      margin-bottom: 8px;
     }
 
     nav {
-      background: #111827;
-      padding: 12px;
+      background: #1f2937;
       text-align: center;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     nav a {
       color: white;
-      margin: 10px;
       text-decoration: none;
+      margin: 8px;
+      font-size: 14px;
+    }
+
+    main {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
     }
 
     section {
       background: white;
-      width: 85%;
       margin: 30px auto;
       padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.10);
     }
 
-    #simulacion-ohm {
+    h2 {
+      color: #111827;
+      margin-top: 0;
+    }
+
+    .formula {
+      background: #f3f4f6;
+      padding: 12px;
+      border-left: 5px solid #1f2937;
+      border-radius: 8px;
+      font-size: 17px;
+    }
+
+    .sketch-area {
       margin-top: 20px;
+      padding: 15px;
+      background: #f9fafb;
+      border: 1px solid #ddd;
+      border-radius: 12px;
     }
 
     canvas {
+      display: block;
+      max-width: 100%;
       border: 2px solid #ddd;
       border-radius: 10px;
+      margin-bottom: 12px;
+      background: white;
+    }
+
+    .validacion {
+      background: #ecfdf5;
+      border-left: 5px solid #047857;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
     }
 
     footer {
-      background: #1f2937;
+      background: #111827;
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 25px;
       margin-top: 40px;
+    }
+
+    input[type="range"] {
+      width: 260px;
+      margin-bottom: 10px;
+    }
+
+    .nota {
+      background: #fff7ed;
+      border-left: 5px solid #ea580c;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -66,108 +121,714 @@
 
 <header>
   <h1>Proyecto Final de Física II</h1>
-  <p>Simulaciones interactivas con apoyo de inteligencia artificial</p>
+  <p>Desarrollo de simulaciones interactivas con apoyo de inteligencia artificial</p>
+  <p>Integrantes: Nombre 1, Nombre 2, Nombre 3</p>
 </header>
 
 <nav>
-  <a href="#ohm">Ley de Ohm</a>
+  <a href="#campo">Campo eléctrico</a>
+  <a href="#gauss">Ley de Gauss</a>
+  <a href="#capacitor">Capacitores</a>
+  <a href="#ohm">Corriente eléctrica</a>
+  <a href="#faraday">Inducción</a>
 </nav>
 
-<section id="ohm">
-  <h2>Simulación 1: Corriente eléctrica y Ley de Ohm</h2>
+<main>
 
+<section>
+  <h2>Objetivo del proyecto</h2>
   <p>
-    Esta simulación muestra cómo cambia la corriente eléctrica cuando se modifica
-    el voltaje o la resistencia.
+    El objetivo de esta página es presentar cinco simulaciones interactivas de Física II.
+    Cada simulación permite modificar variables físicas mediante controles y observar cómo
+    cambia el fenómeno representado.
   </p>
 
-  <p>
-    Fórmula utilizada:
-    <strong>I = V / R</strong>
-  </p>
-
-  <p>
-    Donde V es el voltaje en voltios, R es la resistencia en ohmios e I es la corriente en amperios.
-  </p>
-
-  <div id="simulacion-ohm"></div>
+  <div class="nota">
+    La inteligencia artificial se utilizó como apoyo para organizar el código, mejorar la
+    presentación visual y revisar las fórmulas. Sin embargo, la interpretación física fue
+    revisada por el grupo.
+  </div>
 </section>
 
+<section id="campo">
+  <h2>Simulación 1: Campo eléctrico de una carga puntual</h2>
+
+  <p>
+    Esta simulación muestra cómo cambia el campo eléctrico producido por una carga puntual
+    al modificar la carga y la distancia al punto de análisis.
+  </p>
+
+  <div class="formula">
+    Fórmula utilizada: E = k |q| / r²
+  </div>
+
+  <p>
+    Donde E es el campo eléctrico en N/C, q es la carga en coulomb, r es la distancia
+    en metros y k = 8.99 × 10⁹ N·m²/C².
+  </p>
+
+  <div id="sim-campo" class="sketch-area"></div>
+
+  <div class="validacion">
+    Validación física: si aumenta la carga, aumenta el campo eléctrico. Si aumenta la distancia,
+    el campo disminuye. Si la carga es positiva, el campo sale de ella; si es negativa, entra hacia ella.
+  </div>
+</section>
+
+<section id="gauss">
+  <h2>Simulación 2: Ley de Gauss para una esfera aislante</h2>
+
+  <p>
+    Esta simulación representa el campo eléctrico dentro y fuera de una esfera aislante
+    con carga distribuida uniformemente.
+  </p>
+
+  <div class="formula">
+    Para r &lt; R: E = kQr/R³ <br>
+    Para r ≥ R: E = kQ/r²
+  </div>
+
+  <p>
+    Dentro de la esfera el campo aumenta linealmente con r. Fuera de la esfera disminuye
+    como una carga puntual.
+  </p>
+
+  <div id="sim-gauss" class="sketch-area"></div>
+
+  <div class="validacion">
+    Validación física: en el centro de la esfera el campo debe ser cero. En r = R no debe
+    aparecer un salto brusco en la gráfica.
+  </div>
+</section>
+
+<section id="capacitor">
+  <h2>Simulación 3: Capacitor de placas paralelas</h2>
+
+  <p>
+    Esta simulación muestra cómo cambian la capacitancia, la carga almacenada, el campo
+    eléctrico y la energía de un capacitor de placas paralelas.
+  </p>
+
+  <div class="formula">
+    C = ε₀ εᵣ A / d <br>
+    Q = CV <br>
+    E = V / d <br>
+    U = 1/2 CV²
+  </div>
+
+  <p>
+    Donde A es el área de las placas, d es la separación, V es el voltaje aplicado y εᵣ
+    es la permitividad relativa del material dieléctrico.
+  </p>
+
+  <div id="sim-capacitor" class="sketch-area"></div>
+
+  <div class="validacion">
+    Validación física: al aumentar el área aumenta la capacitancia. Al aumentar la distancia
+    entre placas disminuye la capacitancia. Al aumentar el voltaje aumenta la carga almacenada.
+  </div>
+</section>
+
+<section id="ohm">
+  <h2>Simulación 4: Corriente eléctrica y Ley de Ohm</h2>
+
+  <p>
+    Esta simulación representa un circuito simple con una batería y una resistencia.
+    Permite observar cómo cambia la corriente al modificar el voltaje o la resistencia.
+  </p>
+
+  <div class="formula">
+    I = V / R <br>
+    P = VI
+  </div>
+
+  <p>
+    Donde V es voltaje, R es resistencia, I es corriente y P es potencia eléctrica.
+  </p>
+
+  <div id="sim-ohm" class="sketch-area"></div>
+
+  <div class="validacion">
+    Validación física: si aumenta el voltaje, aumenta la corriente. Si aumenta la resistencia,
+    disminuye la corriente. La resistencia no debe ser cero para evitar división entre cero.
+  </div>
+</section>
+
+<section id="faraday">
+  <h2>Simulación 5: Inducción electromagnética</h2>
+
+  <p>
+    Esta simulación muestra cómo se genera una fem inducida cuando cambia el flujo magnético
+    a través de una espira.
+  </p>
+
+  <div class="formula">
+    ΦB = BA cos(θ) <br>
+    ε = -N dΦB/dt
+  </div>
+
+  <p>
+    En esta simulación se usa un campo magnético variable: B(t) = B₀ sin(ωt).
+    Por eso aparece una fem inducida que cambia en el tiempo.
+  </p>
+
+  <div id="sim-faraday" class="sketch-area"></div>
+
+  <div class="validacion">
+    Validación física: si el flujo magnético no cambia, la fem inducida debe ser cero.
+    Al aumentar N, A, B₀ o ω, aumenta la fem inducida.
+  </div>
+</section>
+
+<section>
+  <h2>Conclusión general</h2>
+  <p>
+    Las simulaciones permiten visualizar que las ecuaciones físicas no son solo fórmulas,
+    sino relaciones entre variables. Al mover los controles se puede observar cómo cambia
+    cada fenómeno y comprobar si el resultado tiene sentido físico.
+  </p>
+</section>
+
+</main>
+
 <footer>
-  <p>Proyecto elaborado por el grupo de Física II.</p>
+  <p>Proyecto Final de Física II - Simulaciones interactivas</p>
 </footer>
 
 <script>
-let voltajeSlider;
-let resistenciaSlider;
-
-function setup() {
-  let canvas = createCanvas(750, 420);
-  canvas.parent("simulacion-ohm");
-
-  voltajeSlider = createSlider(1, 20, 10, 1);
-  voltajeSlider.parent("simulacion-ohm");
-
-  resistenciaSlider = createSlider(1, 20, 5, 1);
-  resistenciaSlider.parent("simulacion-ohm");
+function sci(x, digits = 3) {
+  if (x === 0) return "0";
+  return x.toExponential(digits);
 }
 
-function draw() {
-  background(245);
+/* ============================
+   SIMULACIÓN 1: CAMPO ELÉCTRICO
+============================ */
+new p5(function(p) {
+  let qSlider, rSlider;
+  const k = 8.99e9;
 
-  let V = voltajeSlider.value();
-  let R = resistenciaSlider.value();
-  let I = V / R;
-  let P = V * I;
+  p.setup = function() {
+    let canvas = p.createCanvas(820, 420);
+    canvas.parent("sim-campo");
 
-  fill(0);
-  noStroke();
-  textSize(24);
-  text("Ley de Ohm", 40, 40);
+    p.createDiv("Carga q en nC").parent("sim-campo");
+    qSlider = p.createSlider(-10, 10, 5, 0.5);
+    qSlider.parent("sim-campo");
 
-  textSize(16);
-  text("Voltaje V = " + V + " V", 40, 90);
-  text("Resistencia R = " + R + " Ω", 40, 120);
-  text("Corriente I = " + I.toFixed(2) + " A", 40, 150);
-  text("Potencia P = " + P.toFixed(2) + " W", 40, 180);
+    p.createDiv("Distancia r en m").parent("sim-campo");
+    rSlider = p.createSlider(0.5, 5, 2, 0.1);
+    rSlider.parent("sim-campo");
+  };
 
-  text("Mover controles:", 40, 240);
-  text("Voltaje", 40, 285);
-  text("Resistencia", 40, 325);
+  p.draw = function() {
+    p.background(250);
 
-  // Circuito
-  stroke(0);
-  strokeWeight(3);
-  noFill();
+    let q_nC = qSlider.value();
+    let r = rSlider.value();
+    let q = q_nC * 1e-9;
+    let E = k * Math.abs(q) / (r * r);
 
-  line(420, 120, 620, 120);
-  line(620, 120, 620, 300);
-  line(620, 300, 420, 300);
-  line(420, 300, 420, 120);
+    p.fill(0);
+    p.noStroke();
+    p.textSize(22);
+    p.text("Campo eléctrico de una carga puntual", 30, 35);
 
-  // Resistencia
-  rect(500, 90, 80, 60);
+    p.textSize(16);
+    p.text("q = " + q_nC.toFixed(1) + " nC", 30, 80);
+    p.text("r = " + r.toFixed(2) + " m", 30, 105);
+    p.text("E = " + sci(E, 3) + " N/C", 30, 130);
 
-  // Batería
-  line(405, 190, 435, 190);
-  line(412, 220, 428, 220);
+    p.text("La dirección depende del signo de la carga.", 30, 170);
 
-  // Flecha de corriente
-  line(470, 300, 550, 300);
-  line(550, 300, 535, 290);
-  line(550, 300, 535, 310);
+    let chargeX = 360;
+    let chargeY = 230;
+    let pointX = chargeX + r * 70;
+    let pointY = chargeY;
 
-  noStroke();
-  fill(0);
-  textSize(16);
-  text("R", 535, 125);
-  text("Batería", 360, 245);
-  text("I", 505, 330);
+    p.stroke(150);
+    p.strokeWeight(2);
+    p.line(chargeX, chargeY, pointX, pointY);
 
-  textSize(14);
-  text("Si aumenta V, aumenta I", 420, 360);
-  text("Si aumenta R, disminuye I", 420, 385);
-}
+    p.noStroke();
+    if (q_nC >= 0) {
+      p.fill(255, 120, 120);
+    } else {
+      p.fill(120, 170, 255);
+    }
+    p.circle(chargeX, chargeY, 60);
+
+    p.fill(0);
+    p.textSize(28);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text(q_nC >= 0 ? "+" : "-", chargeX, chargeY);
+
+    p.fill(0);
+    p.circle(pointX, pointY, 12);
+    p.textSize(14);
+    p.text("P", pointX, pointY - 25);
+
+    let dir = q_nC >= 0 ? 1 : -1;
+    let arrowStartX = pointX;
+    let arrowEndX = pointX + dir * Math.min(100, 20 + E / 50);
+
+    p.stroke(0);
+    p.strokeWeight(4);
+    p.line(arrowStartX, pointY, arrowEndX, pointY);
+
+    p.noStroke();
+    p.fill(0);
+    if (dir === 1) {
+      p.triangle(arrowEndX, pointY, arrowEndX - 12, pointY - 8, arrowEndX - 12, pointY + 8);
+    } else {
+      p.triangle(arrowEndX, pointY, arrowEndX + 12, pointY - 8, arrowEndX + 12, pointY + 8);
+    }
+
+    p.textAlign(p.LEFT, p.BASELINE);
+    p.noStroke();
+    p.textSize(14);
+    p.text("Vector E", arrowEndX - 20, pointY - 20);
+
+    p.text("Si q es positiva, el campo sale. Si q es negativa, el campo entra.", 30, 370);
+  };
+}, "sim-campo");
+
+
+/* ============================
+   SIMULACIÓN 2: GAUSS
+============================ */
+new p5(function(p) {
+  let QSlider, RSlider, rSlider;
+  const k = 8.99e9;
+
+  p.setup = function() {
+    let canvas = p.createCanvas(820, 440);
+    canvas.parent("sim-gauss");
+
+    p.createDiv("Carga total Q en nC").parent("sim-gauss");
+    QSlider = p.createSlider(1, 20, 10, 1);
+    QSlider.parent("sim-gauss");
+
+    p.createDiv("Radio de la esfera R en m").parent("sim-gauss");
+    RSlider = p.createSlider(1, 5, 3, 0.1);
+    RSlider.parent("sim-gauss");
+
+    p.createDiv("Distancia r en m").parent("sim-gauss");
+    rSlider = p.createSlider(0, 8, 2, 0.1);
+    rSlider.parent("sim-gauss");
+  };
+
+  function campo(Q, R, r) {
+    if (r === 0) return 0;
+    if (r < R) {
+      return k * Q * r / Math.pow(R, 3);
+    } else {
+      return k * Q / (r * r);
+    }
+  }
+
+  p.draw = function() {
+    p.background(250);
+
+    let Q = QSlider.value() * 1e-9;
+    let QnC = QSlider.value();
+    let R = RSlider.value();
+    let r = rSlider.value();
+    let E = campo(Q, R, r);
+
+    p.fill(0);
+    p.noStroke();
+    p.textSize(22);
+    p.text("Ley de Gauss: esfera aislante cargada", 30, 35);
+
+    p.textSize(16);
+    p.text("Q = " + QnC + " nC", 30, 75);
+    p.text("R = " + R.toFixed(1) + " m", 30, 100);
+    p.text("r = " + r.toFixed(1) + " m", 30, 125);
+    p.text("E = " + sci(E, 3) + " N/C", 30, 150);
+
+    let cx = 220;
+    let cy = 285;
+    let radiusPix = R * 35;
+    let pointPix = r * 35;
+
+    p.stroke(0);
+    p.strokeWeight(2);
+    p.fill(230, 240, 255);
+    p.circle(cx, cy, radiusPix * 2);
+
+    p.noStroke();
+    p.fill(0);
+    p.circle(cx, cy, 5);
+    p.text("Centro", cx - 25, cy + 25);
+
+    p.stroke(220, 80, 80);
+    p.strokeWeight(3);
+    p.line(cx, cy, cx + pointPix, cy);
+
+    p.noStroke();
+    p.fill(220, 80, 80);
+    p.circle(cx + pointPix, cy, 12);
+    p.text("r", cx + pointPix + 10, cy - 10);
+
+    p.fill(0);
+    p.text("Esfera aislante", cx - 50, cy - radiusPix - 15);
+
+    let graphX = 430;
+    let graphY = 340;
+    let graphW = 330;
+    let graphH = 230;
+
+    p.stroke(0);
+    p.strokeWeight(2);
+    p.line(graphX, graphY, graphX + graphW, graphY);
+    p.line(graphX, graphY, graphX, graphY - graphH);
+
+    p.noStroke();
+    p.fill(0);
+    p.text("r", graphX + graphW + 10, graphY + 5);
+    p.text("E", graphX - 20, graphY - graphH - 5);
+    p.text("Gráfica E vs r", graphX + 90, graphY - graphH - 15);
+
+    let maxR = 8;
+    let maxE = 0;
+    for (let i = 0; i <= 100; i++) {
+      let rr = (i / 100) * maxR;
+      maxE = Math.max(maxE, campo(Q, R, rr));
+    }
+
+    p.stroke(20, 90, 180);
+    p.strokeWeight(3);
+    p.noFill();
+    p.beginShape();
+    for (let i = 0; i <= 100; i++) {
+      let rr = (i / 100) * maxR;
+      let EE = campo(Q, R, rr);
+      let x = graphX + (rr / maxR) * graphW;
+      let y = graphY - (EE / maxE) * graphH;
+      p.vertex(x, y);
+    }
+    p.endShape();
+
+    let pointX = graphX + (r / maxR) * graphW;
+    let pointY = graphY - (E / maxE) * graphH;
+
+    p.noStroke();
+    p.fill(220, 80, 80);
+    p.circle(pointX, pointY, 10);
+
+    let RX = graphX + (R / maxR) * graphW;
+    p.stroke(100);
+    p.drawingContext.setLineDash([5, 5]);
+    p.line(RX, graphY, RX, graphY - graphH);
+    p.drawingContext.setLineDash([]);
+    p.noStroke();
+    p.fill(0);
+    p.text("R", RX - 5, graphY + 18);
+
+    p.text("Dentro: E aumenta linealmente", 430, 390);
+    p.text("Fuera: E disminuye como 1/r²", 430, 415);
+  };
+}, "sim-gauss");
+
+
+/* ============================
+   SIMULACIÓN 3: CAPACITOR
+============================ */
+new p5(function(p) {
+  let ASlider, dSlider, VSlider, erSlider;
+  const eps0 = 8.854e-12;
+
+  p.setup = function() {
+    let canvas = p.createCanvas(820, 450);
+    canvas.parent("sim-capacitor");
+
+    p.createDiv("Área A en m²").parent("sim-capacitor");
+    ASlider = p.createSlider(0.05, 1.0, 0.40, 0.05);
+    ASlider.parent("sim-capacitor");
+
+    p.createDiv("Distancia d en mm").parent("sim-capacitor");
+    dSlider = p.createSlider(1, 50, 10, 1);
+    dSlider.parent("sim-capacitor");
+
+    p.createDiv("Voltaje V en voltios").parent("sim-capacitor");
+    VSlider = p.createSlider(1, 100, 20, 1);
+    VSlider.parent("sim-capacitor");
+
+    p.createDiv("Permitividad relativa εr").parent("sim-capacitor");
+    erSlider = p.createSlider(1, 10, 1, 0.5);
+    erSlider.parent("sim-capacitor");
+  };
+
+  p.draw = function() {
+    p.background(250);
+
+    let A = ASlider.value();
+    let dmm = dSlider.value();
+    let d = dmm / 1000;
+    let V = VSlider.value();
+    let er = erSlider.value();
+
+    let C = eps0 * er * A / d;
+    let Q = C * V;
+    let E = V / d;
+    let U = 0.5 * C * V * V;
+
+    p.fill(0);
+    p.noStroke();
+    p.textSize(22);
+    p.text("Capacitor de placas paralelas", 30, 35);
+
+    p.textSize(16);
+    p.text("A = " + A.toFixed(2) + " m²", 30, 75);
+    p.text("d = " + dmm.toFixed(0) + " mm", 30, 100);
+    p.text("V = " + V.toFixed(0) + " V", 30, 125);
+    p.text("εr = " + er.toFixed(1), 30, 150);
+
+    p.text("C = " + sci(C, 3) + " F", 30, 195);
+    p.text("Q = " + sci(Q, 3) + " C", 30, 220);
+    p.text("E = " + sci(E, 3) + " V/m", 30, 245);
+    p.text("U = " + sci(U, 3) + " J", 30, 270);
+
+    let x1 = 450;
+    let x2 = 450 + dmm * 4;
+    let yTop = 110;
+    let yBottom = 330;
+    let plateH = Math.min(220, 100 + A * 120);
+
+    yTop = 220 - plateH / 2;
+    yBottom = 220 + plateH / 2;
+
+    p.stroke(0);
+    p.strokeWeight(8);
+    p.line(x1, yTop, x1, yBottom);
+    p.line(x2, yTop, x2, yBottom);
+
+    p.noStroke();
+    p.fill(0);
+    p.text("+", x1 - 30, 220);
+    p.text("-", x2 + 20, 220);
+
+    p.stroke(40, 100, 200);
+    p.strokeWeight(2);
+    for (let y = yTop + 25; y <= yBottom - 25; y += 35) {
+      p.line(x1 + 20, y, x2 - 20, y);
+      p.noStroke();
+      p.fill(40, 100, 200);
+      p.triangle(x2 - 20, y, x2 - 32, y - 7, x2 - 32, y + 7);
+      p.stroke(40, 100, 200);
+    }
+
+    p.noStroke();
+    p.fill(0);
+    p.textSize(15);
+    p.text("Campo eléctrico E = V/d", 455, 370);
+    p.text("Al aumentar d, C disminuye", 455, 395);
+  };
+}, "sim-capacitor");
+
+
+/* ============================
+   SIMULACIÓN 4: LEY DE OHM
+============================ */
+new p5(function(p) {
+  let VSlider, RSlider;
+
+  p.setup = function() {
+    let canvas = p.createCanvas(820, 420);
+    canvas.parent("sim-ohm");
+
+    p.createDiv("Voltaje V en voltios").parent("sim-ohm");
+    VSlider = p.createSlider(1, 50, 12, 1);
+    VSlider.parent("sim-ohm");
+
+    p.createDiv("Resistencia R en ohmios").parent("sim-ohm");
+    RSlider = p.createSlider(1, 100, 20, 1);
+    RSlider.parent("sim-ohm");
+  };
+
+  p.draw = function() {
+    p.background(250);
+
+    let V = VSlider.value();
+    let R = RSlider.value();
+    let I = V / R;
+    let P = V * I;
+
+    p.fill(0);
+    p.noStroke();
+    p.textSize(22);
+    p.text("Corriente eléctrica: Ley de Ohm", 30, 35);
+
+    p.textSize(16);
+    p.text("V = " + V + " V", 30, 80);
+    p.text("R = " + R + " Ω", 30, 105);
+    p.text("I = " + I.toFixed(3) + " A", 30, 130);
+    p.text("P = " + P.toFixed(3) + " W", 30, 155);
+
+    p.text("I = V/R", 30, 205);
+    p.text("P = VI", 30, 230);
+
+    let speed = Math.min(80, I * 30);
+
+    p.stroke(0);
+    p.strokeWeight(3);
+    p.noFill();
+
+    p.line(380, 110, 640, 110);
+    p.line(640, 110, 640, 300);
+    p.line(640, 300, 380, 300);
+    p.line(380, 300, 380, 110);
+
+    p.rect(485, 80, 90, 60);
+
+    p.line(360, 180, 400, 180);
+    p.line(370, 210, 390, 210);
+
+    p.noStroke();
+    p.fill(0);
+    p.text("Resistencia", 490, 75);
+    p.text("Batería", 330, 240);
+
+    p.stroke(30, 120, 200);
+    p.strokeWeight(4);
+    let arrowX = 420 + (p.frameCount * (1 + speed / 30)) % 160;
+    p.line(arrowX, 300, arrowX + 50, 300);
+    p.noStroke();
+    p.fill(30, 120, 200);
+    p.triangle(arrowX + 50, 300, arrowX + 35, 290, arrowX + 35, 310);
+
+    p.fill(0);
+    p.text("Flecha de corriente", 450, 350);
+  };
+}, "sim-ohm");
+
+
+/* ============================
+   SIMULACIÓN 5: FARADAY
+============================ */
+new p5(function(p) {
+  let NSlider, BSlider, ASlider, wSlider, thetaSlider;
+
+  p.setup = function() {
+    let canvas = p.createCanvas(820, 470);
+    canvas.parent("sim-faraday");
+
+    p.createDiv("Número de vueltas N").parent("sim-faraday");
+    NSlider = p.createSlider(1, 50, 10, 1);
+    NSlider.parent("sim-faraday");
+
+    p.createDiv("Campo máximo B₀ en teslas").parent("sim-faraday");
+    BSlider = p.createSlider(0.1, 2.0, 0.8, 0.1);
+    BSlider.parent("sim-faraday");
+
+    p.createDiv("Área A en m²").parent("sim-faraday");
+    ASlider = p.createSlider(0.05, 1.0, 0.30, 0.05);
+    ASlider.parent("sim-faraday");
+
+    p.createDiv("Frecuencia angular ω en rad/s").parent("sim-faraday");
+    wSlider = p.createSlider(1, 10, 3, 0.5);
+    wSlider.parent("sim-faraday");
+
+    p.createDiv("Ángulo θ en grados").parent("sim-faraday");
+    thetaSlider = p.createSlider(0, 90, 30, 1);
+    thetaSlider.parent("sim-faraday");
+  };
+
+  p.draw = function() {
+    p.background(250);
+
+    let N = NSlider.value();
+    let B0 = BSlider.value();
+    let A = ASlider.value();
+    let w = wSlider.value();
+    let thetaDeg = thetaSlider.value();
+    let theta = p.radians(thetaDeg);
+    let t = p.frameCount / 30;
+
+    let phi = B0 * A * Math.cos(theta) * Math.sin(w * t);
+    let fem = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * t);
+
+    p.fill(0);
+    p.noStroke();
+    p.textSize(22);
+    p.text("Inducción electromagnética: Ley de Faraday", 30, 35);
+
+    p.textSize(16);
+    p.text("N = " + N, 30, 75);
+    p.text("B₀ = " + B0.toFixed(1) + " T", 30, 100);
+    p.text("A = " + A.toFixed(2) + " m²", 30, 125);
+    p.text("ω = " + w.toFixed(1) + " rad/s", 30, 150);
+    p.text("θ = " + thetaDeg + "°", 30, 175);
+
+    p.text("Flujo ΦB = " + phi.toFixed(4) + " Wb", 30, 220);
+    p.text("Fem inducida ε = " + fem.toFixed(4) + " V", 30, 245);
+
+    let cx = 310;
+    let cy = 330;
+
+    p.stroke(0);
+    p.strokeWeight(3);
+    p.noFill();
+    p.ellipse(cx, cy, 150, 90);
+
+    p.noStroke();
+    p.fill(0);
+    p.text("Espira", cx - 25, cy + 70);
+
+    p.stroke(40, 100, 200);
+    p.strokeWeight(2);
+    for (let x = 220; x <= 400; x += 35) {
+      p.line(x, 260, x, 400);
+      p.noStroke();
+      p.fill(40, 100, 200);
+      p.triangle(x, 400, x - 7, 385, x + 7, 385);
+      p.stroke(40, 100, 200);
+    }
+
+    p.noStroke();
+    p.fill(40, 100, 200);
+    p.text("Campo magnético B(t)", 230, 245);
+
+    let graphX = 500;
+    let graphY = 350;
+    let graphW = 260;
+    let graphH = 220;
+
+    p.stroke(0);
+    p.strokeWeight(2);
+    p.line(graphX, graphY, graphX + graphW, graphY);
+    p.line(graphX, graphY - graphH / 2, graphX + graphW, graphY - graphH / 2);
+    p.line(graphX, graphY - graphH, graphX + graphW, graphY - graphH);
+    p.line(graphX, graphY, graphX, graphY - graphH);
+
+    p.noStroke();
+    p.fill(0);
+    p.text("Gráfica de ε(t)", graphX + 70, graphY - graphH - 15);
+
+    let maxFem = Math.max(0.001, Math.abs(N * B0 * A * w * Math.cos(theta)));
+
+    p.stroke(200, 60, 60);
+    p.strokeWeight(3);
+    p.noFill();
+    p.beginShape();
+
+    for (let i = 0; i <= graphW; i++) {
+      let tt = t - 4 + i / 30;
+      let femi = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * tt);
+      let y = graphY - graphH / 2 - (femi / maxFem) * (graphH / 2 - 10);
+      p.vertex(graphX + i, y);
+    }
+
+    p.endShape();
+
+    p.noStroke();
+    p.fill(0);
+    p.text("La fem aparece porque cambia el flujo magnético.", 500, 390);
+    p.text("Si el flujo no cambia, ε = 0.", 500, 415);
+  };
+}, "sim-faraday");
+
 </script>
 
 </body>
