@@ -3,25 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Final Física II</title>
+  <title>Simulaciones Interactivas Física II</title>
 
-  <!-- Librería p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
   <style>
-    :root {
-      --fondo: #eef2f7;
-      --oscuro: #111827;
-      --oscuro2: #1f2937;
-      --azul: #2563eb;
-      --rojo: #ef4444;
-      --verde: #047857;
-      --gris: #4b5563;
-      --tarjeta: #ffffff;
-      --borde: #e5e7eb;
-      --suave: #f9fafb;
-    }
-
     * {
       box-sizing: border-box;
       scroll-behavior: smooth;
@@ -30,395 +16,463 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: var(--fondo);
-      color: #222;
-      line-height: 1.55;
-    }
-
-    .hero {
-      min-height: 460px;
-      background: radial-gradient(circle at top left, #1d4ed8, #111827 55%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 55px 8%;
-      gap: 35px;
-    }
-
-    .hero-contenido {
-      max-width: 660px;
-    }
-
-    .etiqueta {
-      background: rgba(255,255,255,0.15);
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-    }
-
-    .hero h1 {
-      font-size: 46px;
-      line-height: 1.1;
-      margin: 18px 0;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #e5e7eb;
-    }
-
-    .hero-botones {
-      margin-top: 25px;
-    }
-
-    .hero-botones a {
-      display: inline-block;
-      margin: 8px 8px 0 0;
-      padding: 12px 18px;
-      border-radius: 10px;
-      background: white;
+      background: #f3f4f6;
       color: #111827;
-      text-decoration: none;
-      font-weight: bold;
     }
 
-    .hero-botones a:nth-child(2) {
-      background: transparent;
+    header {
+      background: #111827;
       color: white;
-      border: 1px solid white;
+      padding: 28px 7%;
     }
 
-    .hero-animacion {
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      position: relative;
-      display: grid;
-      place-items: center;
+    header h1 {
+      margin: 0;
+      font-size: 34px;
     }
 
-    .carga-central {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: var(--rojo);
-      display: grid;
-      place-items: center;
-      font-size: 42px;
-      font-weight: bold;
-      box-shadow: 0 0 35px rgba(239,68,68,0.7);
-      z-index: 2;
-    }
-
-    .orbita {
-      position: absolute;
-      border: 2px solid rgba(255,255,255,0.35);
-      border-radius: 50%;
-      animation: girar 8s linear infinite;
-    }
-
-    .orbita1 {
-      width: 180px;
-      height: 180px;
-    }
-
-    .orbita2 {
-      width: 250px;
-      height: 250px;
-      animation-duration: 13s;
-    }
-
-    .orbita::before {
-      content: "";
-      width: 14px;
-      height: 14px;
-      background: #60a5fa;
-      border-radius: 50%;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-    }
-
-    @keyframes girar {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    header p {
+      margin: 8px 0 0 0;
+      color: #d1d5db;
+      font-size: 16px;
     }
 
     nav {
-      background: var(--oscuro2);
-      text-align: center;
-      padding: 12px;
+      background: white;
+      border-bottom: 1px solid #d1d5db;
+      padding: 12px 7%;
       position: sticky;
       top: 0;
-      z-index: 50;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+      z-index: 20;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     nav a {
-      color: white;
       text-decoration: none;
-      margin: 8px;
+      color: #111827;
+      background: #e5e7eb;
+      padding: 8px 12px;
+      border-radius: 999px;
       font-size: 14px;
-      display: inline-block;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      background: #2563eb;
+      color: white;
     }
 
-    main {
-      width: 90%;
-      max-width: 1150px;
-      margin: auto;
+    .contenedor {
+      width: 92%;
+      max-width: 1250px;
+      margin: 24px auto;
     }
 
-    section {
-      background: var(--tarjeta);
-      margin: 32px auto;
-      padding: 26px;
-      border-radius: 18px;
-      box-shadow: 0 0 14px rgba(0,0,0,0.10);
-      scroll-margin-top: 90px;
-    }
-
-    h2 {
-      color: var(--oscuro);
-      margin-top: 0;
-      font-size: 28px;
-    }
-
-    h3 {
-      color: var(--oscuro);
-    }
-
-    .intro-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .mini-card {
-      background: var(--suave);
-      border: 1px solid var(--borde);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .menu-principal {
+    .intro {
       background: white;
-      width: 90%;
-      max-width: 1150px;
-      margin: 35px auto;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 0 16px rgba(0,0,0,0.12);
-    }
-
-    .menu-principal h2 {
-      text-align: center;
-      font-size: 32px;
-    }
-
-    .menu-principal > p {
-      text-align: center;
-      color: var(--gris);
-    }
-
-    .tarjetas-simulaciones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-      margin-top: 25px;
-    }
-
-    .tarjeta-menu {
-      background: var(--suave);
-      border: 1px solid var(--borde);
-      border-radius: 16px;
-      padding: 18px;
-      text-decoration: none;
-      color: var(--oscuro);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .tarjeta-menu:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    }
-
-    .tarjeta-menu h3 {
-      margin-bottom: 8px;
-    }
-
-    .tarjeta-menu p {
-      font-size: 14px;
-      color: var(--gris);
-    }
-
-    .preview {
-      height: 130px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+      padding: 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    .intro h2 {
+      margin-top: 0;
+    }
+
+    .grid-sims {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .sim-card {
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sim-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.16);
+    }
+
+    .thumb {
+      height: 170px;
+      background: #dbeafe;
       position: relative;
       overflow: hidden;
-      margin-bottom: 14px;
+      border-bottom: 1px solid #d1d5db;
     }
 
-    .carga-preview {
+    .thumb-barra {
       position: absolute;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: var(--rojo);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+
+    .sim-card h3 {
+      font-size: 21px;
+      margin: 16px 14px 8px 14px;
+      min-height: 50px;
+    }
+
+    .sim-card p {
+      margin: 0 14px 12px 14px;
+      font-size: 14px;
+      color: #4b5563;
+      min-height: 45px;
+    }
+
+    .iconos {
+      display: flex;
+      gap: 7px;
+      margin: 0 14px 16px 14px;
+    }
+
+    .icono {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
       color: white;
       display: grid;
       place-items: center;
-      font-size: 28px;
+      font-size: 14px;
       font-weight: bold;
-      left: 82px;
-      top: 42px;
-      box-shadow: 0 0 25px rgba(239,68,68,0.6);
     }
 
-    .linea-campo {
+    .html5 { background: #111827; }
+    .teclado { background: #16a34a; }
+    .zoom { background: #9333ea; }
+    .pantalla { background: #7e22ce; }
+
+    .visor {
+      margin-top: 38px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.12);
+      overflow: hidden;
+      border: 1px solid #d1d5db;
+    }
+
+    .visor-header {
+      background: #111827;
+      color: white;
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .visor-header h2 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .visor-header button {
+      background: white;
+      color: #111827;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .visor-body {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      padding: 22px;
+    }
+
+    .canvas-box {
+      overflow-x: auto;
+      background: #f9fafb;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    canvas {
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      max-width: 100%;
+      height: auto;
+      background: white;
+    }
+
+    .panel {
+      background: #f9fafb;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+    }
+
+    .formula {
+      background: #eef2ff;
+      border-left: 5px solid #2563eb;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    .idea {
+      background: #fff7ed;
+      border-left: 5px solid #ea580c;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+
+    .validacion {
+      background: #ecfdf5;
+      border-left: 5px solid #047857;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    .control {
+      margin-bottom: 14px;
+    }
+
+    .control label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #2563eb;
+    }
+
+    .valor-control {
+      font-size: 13px;
+      color: #374151;
+    }
+
+    footer {
+      margin-top: 40px;
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* ============================
+       PREVISUALIZACIONES TIPO PHET
+    ============================ */
+
+    .thumb-campo {
+      background: radial-gradient(circle at center, #eff6ff, #bfdbfe);
+    }
+
+    .preview-carga {
       position: absolute;
-      height: 3px;
-      background: var(--azul);
-      left: 125px;
-      animation: pulso 1.6s infinite ease-in-out;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: white;
+      font-size: 34px;
+      display: grid;
+      place-items: center;
+      left: 105px;
+      top: 52px;
+      box-shadow: 0 0 28px rgba(239,68,68,0.75);
+      z-index: 3;
     }
 
-    .l1 { width: 65px; top: 50px; }
-    .l2 { width: 90px; top: 65px; }
-    .l3 { width: 65px; top: 80px; }
+    .linea {
+      position: absolute;
+      height: 4px;
+      background: #2563eb;
+      left: 160px;
+      animation: pulso 1.4s infinite ease-in-out;
+      border-radius: 999px;
+    }
+
+    .linea1 { width: 70px; top: 55px; }
+    .linea2 { width: 95px; top: 80px; }
+    .linea3 { width: 70px; top: 105px; }
 
     @keyframes pulso {
-      0%, 100% { opacity: 0.35; transform: scaleX(0.85); }
-      50% { opacity: 1; transform: scaleX(1.1); }
+      0%, 100% { opacity: 0.35; transform: scaleX(0.8); }
+      50% { opacity: 1; transform: scaleX(1.08); }
     }
 
-    .esfera-preview {
+    .thumb-gauss {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    }
+
+    .preview-esfera {
       position: absolute;
-      width: 82px;
-      height: 82px;
+      width: 105px;
+      height: 105px;
       border-radius: 50%;
-      background: rgba(59,130,246,0.22);
-      border: 3px solid var(--azul);
-      left: 25px;
-      top: 24px;
+      background: rgba(37,99,235,0.18);
+      border: 4px solid #2563eb;
+      left: 32px;
+      top: 30px;
     }
 
-    .grafica-preview {
+    .preview-grafica {
       position: absolute;
-      width: 100px;
-      height: 55px;
-      border-left: 3px solid var(--oscuro);
-      border-bottom: 3px solid var(--oscuro);
-      right: 25px;
-      bottom: 25px;
+      width: 110px;
+      height: 80px;
+      right: 24px;
+      top: 45px;
+      border-left: 4px solid #111827;
+      border-bottom: 4px solid #111827;
     }
 
-    .grafica-preview::after {
+    .preview-grafica::after {
       content: "";
       position: absolute;
-      width: 85px;
-      height: 45px;
+      width: 88px;
+      height: 50px;
+      border-top: 5px solid #ef4444;
       border-radius: 50%;
-      border-top: 4px solid var(--rojo);
-      transform: rotate(-15deg);
-      left: 10px;
-      top: 5px;
+      top: 8px;
+      left: 13px;
+      transform: rotate(-12deg);
     }
 
-    .placa {
+    .thumb-capacitor {
+      background: linear-gradient(135deg, #fef3c7, #dbeafe);
+    }
+
+    .preview-placa {
       position: absolute;
-      width: 12px;
-      height: 90px;
-      background: var(--oscuro);
-      top: 20px;
-    }
-
-    .placa1 { left: 70px; }
-    .placa2 { right: 70px; }
-
-    .flecha-campo {
-      position: absolute;
-      width: 85px;
-      height: 4px;
-      background: var(--azul);
-      top: 63px;
-      left: 93px;
-      animation: campoMover 1.4s infinite;
-    }
-
-    .flecha-campo::after {
-      content: "";
-      position: absolute;
-      right: -8px;
-      top: -6px;
-      border-left: 12px solid var(--azul);
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-
-    @keyframes campoMover {
-      0% { transform: translateX(-5px); opacity: 0.5; }
-      50% { transform: translateX(5px); opacity: 1; }
-      100% { transform: translateX(-5px); opacity: 0.5; }
-    }
-
-    .circuito-preview {
-      position: absolute;
-      width: 140px;
-      height: 75px;
-      border: 4px solid var(--oscuro);
-      border-radius: 8px;
-      left: 38px;
+      width: 14px;
+      height: 110px;
+      background: #111827;
       top: 28px;
     }
 
-    .electron {
+    .p1 { left: 86px; }
+    .p2 { right: 86px; }
+
+    .preview-flecha {
+      position: absolute;
+      width: 95px;
+      height: 5px;
+      background: #2563eb;
+      top: 83px;
+      left: 116px;
+      border-radius: 999px;
+      animation: flechaCap 1.5s infinite ease-in-out;
+    }
+
+    .preview-flecha::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: -7px;
+      border-left: 13px solid #2563eb;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+    }
+
+    @keyframes flechaCap {
+      0%, 100% { transform: translateX(-5px); opacity: 0.55; }
+      50% { transform: translateX(5px); opacity: 1; }
+    }
+
+    .thumb-ohm {
+      background: linear-gradient(135deg, #f9fafb, #dbeafe);
+    }
+
+    .preview-circuito {
+      position: absolute;
+      width: 155px;
+      height: 88px;
+      border: 5px solid #111827;
+      border-radius: 10px;
+      left: 55px;
+      top: 42px;
+    }
+
+    .preview-resistencia {
+      position: absolute;
+      width: 58px;
+      height: 34px;
+      background: white;
+      border: 4px solid #111827;
+      left: 105px;
+      top: 28px;
+      border-radius: 6px;
+    }
+
+    .preview-electron {
       position: absolute;
       width: 13px;
       height: 13px;
-      background: var(--azul);
+      background: #2563eb;
       border-radius: 50%;
-      top: 95px;
-      animation: electronMover 2s linear infinite;
+      top: 123px;
+      animation: moverElectron 2s linear infinite;
     }
 
-    .e1 { left: 45px; }
-    .e2 { left: 95px; animation-delay: 0.7s; }
+    .e1 { left: 65px; }
+    .e2 { left: 105px; animation-delay: 0.55s; }
+    .e3 { left: 145px; animation-delay: 1.1s; }
 
-    @keyframes electronMover {
+    @keyframes moverElectron {
       from { transform: translateX(0); }
-      to { transform: translateX(105px); }
+      to { transform: translateX(110px); }
     }
 
-    .bobina-preview {
+    .thumb-faraday {
+      background: radial-gradient(circle at center, #f9fafb, #dbeafe);
+    }
+
+    .preview-bobina {
       position: absolute;
-      width: 105px;
-      height: 65px;
-      border: 5px solid var(--oscuro);
+      width: 125px;
+      height: 75px;
+      border: 6px solid #111827;
       border-radius: 50%;
-      left: 25px;
-      top: 35px;
+      left: 45px;
+      top: 48px;
       animation: bobina 2s infinite ease-in-out;
     }
 
-    .onda-preview {
+    .preview-campo-m {
       position: absolute;
-      width: 90px;
-      height: 40px;
-      border-top: 4px solid var(--rojo);
+      width: 100px;
+      height: 50px;
+      right: 34px;
+      top: 60px;
+      border-top: 6px solid #ef4444;
       border-radius: 50%;
-      right: 25px;
-      top: 45px;
-      animation: onda 1.7s infinite ease-in-out;
+      animation: onda 1.6s infinite ease-in-out;
     }
 
     @keyframes bobina {
@@ -427,90 +481,17 @@
     }
 
     @keyframes onda {
-      0%, 100% { transform: scaleX(0.8); opacity: 0.5; }
+      0%, 100% { transform: scaleX(0.75); opacity: 0.45; }
       50% { transform: scaleX(1.15); opacity: 1; }
     }
 
-    .formula {
-      background: #f3f4f6;
-      padding: 14px;
-      border-left: 5px solid var(--oscuro2);
-      border-radius: 8px;
-      font-size: 17px;
-      margin: 15px 0;
-    }
-
-    .nota {
-      background: #fff7ed;
-      border-left: 5px solid #ea580c;
-      padding: 13px;
-      border-radius: 8px;
-      margin: 15px 0;
-    }
-
-    .validacion {
-      background: #ecfdf5;
-      border-left: 5px solid var(--verde);
-      padding: 13px;
-      border-radius: 8px;
-      margin-top: 15px;
-    }
-
-    .sketch-area {
-      margin-top: 20px;
-      padding: 16px;
-      background: var(--suave);
-      border: 1px solid #ddd;
-      border-radius: 14px;
-      overflow-x: auto;
-    }
-
-    canvas {
-      display: block;
-      max-width: 100%;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      margin-bottom: 14px;
-      background: white;
-    }
-
-    .control-label {
-      font-size: 14px;
-      font-weight: bold;
-      margin-top: 8px;
-      color: var(--oscuro);
-    }
-
-    input[type="range"] {
-      width: min(320px, 90%);
-      margin: 6px 0 10px 0;
-      accent-color: var(--azul);
-    }
-
-    footer {
-      background: var(--oscuro);
-      color: white;
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-    }
-
     @media (max-width: 850px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
+      .visor-body {
+        grid-template-columns: 1fr;
       }
 
-      .hero h1 {
-        font-size: 34px;
-      }
-
-      nav a {
-        margin: 5px;
-      }
-
-      section {
-        padding: 20px;
+      header h1 {
+        font-size: 27px;
       }
     }
   </style>
@@ -518,986 +499,790 @@
 
 <body>
 
-<header class="hero">
-  <div class="hero-contenido">
-    <p class="etiqueta">Proyecto Final de Física II</p>
-    <h1>Simulaciones Interactivas de Electromagnetismo</h1>
-    <p>
-      Página web con cinco simulaciones interactivas para visualizar fenómenos de Física II,
-      modificar variables y comprobar el comportamiento físico del sistema.
-    </p>
-
-    <div class="hero-botones">
-      <a href="#menu-principal">Ver simulaciones</a>
-      <a href="#uso-ia">Uso de IA</a>
-    </div>
-  </div>
-
-  <div class="hero-animacion">
-    <div class="orbita orbita1"></div>
-    <div class="orbita orbita2"></div>
-    <div class="carga-central">+</div>
-  </div>
+<header>
+  <h1>Simulaciones Interactivas de Física II</h1>
+  <p>Proyecto final con apoyo de inteligencia artificial | Integrantes: Nombre 1, Nombre 2, Nombre 3</p>
 </header>
 
 <nav>
-  <a href="#menu-principal">Inicio</a>
-  <a href="#campo">Campo eléctrico</a>
-  <a href="#gauss">Ley de Gauss</a>
-  <a href="#capacitor">Capacitores</a>
-  <a href="#ohm">Corriente eléctrica</a>
-  <a href="#faraday">Inducción</a>
+  <a href="#menu">Menú principal</a>
+  <a href="#visor">Simulación abierta</a>
+  <a href="#uso-ia">Uso de IA</a>
 </nav>
 
-<section id="menu-principal" class="menu-principal">
-  <h2>Menú principal de simulaciones</h2>
-  <p>
-    Seleccione una simulación para explorar cómo cambian las variables físicas del sistema.
-  </p>
+<div class="contenedor">
 
-  <div class="tarjetas-simulaciones">
+  <section class="intro" id="menu">
+    <h2>Menú principal</h2>
+    <p>
+      Seleccione una tarjeta para abrir la simulación. Cada una tiene una previsualización,
+      controles interactivos, fórmulas, unidades y validación física.
+    </p>
+  </section>
 
-    <a href="#campo" class="tarjeta-menu">
-      <div class="preview preview-campo">
-        <span class="carga-preview">+</span>
-        <span class="linea-campo l1"></span>
-        <span class="linea-campo l2"></span>
-        <span class="linea-campo l3"></span>
+  <div class="grid-sims">
+
+    <div class="sim-card" onclick="abrirSimulacion('campo')">
+      <div class="thumb thumb-campo">
+        <div class="preview-carga">+</div>
+        <div class="linea linea1"></div>
+        <div class="linea linea2"></div>
+        <div class="linea linea3"></div>
+        <div class="thumb-barra">Campo eléctrico</div>
       </div>
       <h3>Campo eléctrico</h3>
-      <p>Dirección e intensidad del campo producido por una carga puntual.</p>
-    </a>
+      <p>Campo producido por una carga puntual y su variación con la distancia.</p>
+      <div class="iconos">
+        <span class="icono html5">5</span>
+        <span class="icono teclado">⌨</span>
+        <span class="icono zoom">＋</span>
+        <span class="icono pantalla">⛶</span>
+      </div>
+    </div>
 
-    <a href="#gauss" class="tarjeta-menu">
-      <div class="preview preview-gauss">
-        <span class="esfera-preview"></span>
-        <span class="grafica-preview"></span>
+    <div class="sim-card" onclick="abrirSimulacion('gauss')">
+      <div class="thumb thumb-gauss">
+        <div class="preview-esfera"></div>
+        <div class="preview-grafica"></div>
+        <div class="thumb-barra">Ley de Gauss</div>
       </div>
       <h3>Ley de Gauss</h3>
       <p>Campo eléctrico dentro y fuera de una esfera aislante cargada.</p>
-    </a>
-
-    <a href="#capacitor" class="tarjeta-menu">
-      <div class="preview preview-capacitor">
-        <span class="placa placa1"></span>
-        <span class="placa placa2"></span>
-        <span class="flecha-campo"></span>
+      <div class="iconos">
+        <span class="icono html5">5</span>
+        <span class="icono teclado">⌨</span>
+        <span class="icono zoom">＋</span>
+        <span class="icono pantalla">⛶</span>
       </div>
-      <h3>Capacitores</h3>
-      <p>Relación entre capacitancia, carga, campo eléctrico y energía.</p>
-    </a>
+    </div>
 
-    <a href="#ohm" class="tarjeta-menu">
-      <div class="preview preview-ohm">
-        <span class="circuito-preview"></span>
-        <span class="electron e1"></span>
-        <span class="electron e2"></span>
+    <div class="sim-card" onclick="abrirSimulacion('capacitor')">
+      <div class="thumb thumb-capacitor">
+        <div class="preview-placa p1"></div>
+        <div class="preview-placa p2"></div>
+        <div class="preview-flecha"></div>
+        <div class="thumb-barra">Capacitores</div>
       </div>
-      <h3>Corriente eléctrica</h3>
-      <p>Relación entre voltaje, resistencia, corriente y potencia.</p>
-    </a>
+      <h3>Capacitor de placas</h3>
+      <p>Capacitancia, carga, campo eléctrico y energía almacenada.</p>
+      <div class="iconos">
+        <span class="icono html5">5</span>
+        <span class="icono teclado">⌨</span>
+        <span class="icono zoom">＋</span>
+        <span class="icono pantalla">⛶</span>
+      </div>
+    </div>
 
-    <a href="#faraday" class="tarjeta-menu">
-      <div class="preview preview-faraday">
-        <span class="bobina-preview"></span>
-        <span class="onda-preview"></span>
+    <div class="sim-card" onclick="abrirSimulacion('ohm')">
+      <div class="thumb thumb-ohm">
+        <div class="preview-circuito"></div>
+        <div class="preview-resistencia"></div>
+        <div class="preview-electron e1"></div>
+        <div class="preview-electron e2"></div>
+        <div class="preview-electron e3"></div>
+        <div class="thumb-barra">Corriente eléctrica</div>
+      </div>
+      <h3>Ley de Ohm</h3>
+      <p>Relación entre voltaje, resistencia, corriente y potencia eléctrica.</p>
+      <div class="iconos">
+        <span class="icono html5">5</span>
+        <span class="icono teclado">⌨</span>
+        <span class="icono zoom">＋</span>
+        <span class="icono pantalla">⛶</span>
+      </div>
+    </div>
+
+    <div class="sim-card" onclick="abrirSimulacion('faraday')">
+      <div class="thumb thumb-faraday">
+        <div class="preview-bobina"></div>
+        <div class="preview-campo-m"></div>
+        <div class="thumb-barra">Inducción electromagnética</div>
       </div>
       <h3>Inducción electromagnética</h3>
-      <p>Cambio del flujo magnético y aparición de fem inducida.</p>
-    </a>
-
-  </div>
-</section>
-
-<main>
-
-<section>
-  <h2>Objetivo del proyecto</h2>
-  <p>
-    El objetivo de esta página es presentar cinco simulaciones interactivas de Física II.
-    Cada simulación permite modificar variables físicas mediante controles y observar
-    cómo cambia el fenómeno representado.
-  </p>
-
-  <div class="intro-grid">
-    <div class="mini-card">
-      <h3>Interactividad</h3>
-      <p>Las variables se modifican con deslizadores y los resultados cambian en tiempo real.</p>
+      <p>Cambio de flujo magnético y aparición de fem inducida.</p>
+      <div class="iconos">
+        <span class="icono html5">5</span>
+        <span class="icono teclado">⌨</span>
+        <span class="icono zoom">＋</span>
+        <span class="icono pantalla">⛶</span>
+      </div>
     </div>
 
-    <div class="mini-card">
-      <h3>Visualización</h3>
-      <p>Cada fenómeno tiene dibujos, vectores, gráficas o animaciones para entender mejor la física.</p>
+  </div>
+
+  <section class="visor" id="visor">
+    <div class="visor-header">
+      <h2 id="tituloSim">Campo eléctrico</h2>
+      <button onclick="volverMenu()">Volver al menú</button>
     </div>
 
-    <div class="mini-card">
-      <h3>Validación física</h3>
-      <p>Se revisa que las ecuaciones, unidades y comportamientos tengan sentido físico.</p>
+    <div class="visor-body">
+      <div class="canvas-box">
+        <div id="canvasSim"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Explicación física</h3>
+        <div class="formula" id="formulaSim"></div>
+        <div class="idea" id="ideaSim"></div>
+
+        <h3>Controles</h3>
+        <div id="controles"></div>
+
+        <div class="validacion" id="validacionSim"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="campo">
-  <h2>Simulación 1: Campo eléctrico de una carga puntual</h2>
+  <section class="intro" id="uso-ia">
+    <h2>Uso de inteligencia artificial</h2>
+    <p>
+      La inteligencia artificial se utilizó como apoyo para organizar el código,
+      mejorar la presentación visual y revisar la coherencia de las ecuaciones.
+      La revisión final de fórmulas, unidades y comportamiento físico corresponde al grupo.
+    </p>
+  </section>
 
-  <p>
-    Esta simulación muestra cómo cambia el campo eléctrico producido por una carga puntual
-    al modificar la carga y la distancia al punto de análisis.
-  </p>
-
-  <div class="formula">
-    Fórmula utilizada: E = k |q| / r²
-  </div>
-
-  <p>
-    Donde E es el campo eléctrico en N/C, q es la carga en coulomb, r es la distancia
-    en metros y k = 8.99 × 10⁹ N·m²/C².
-  </p>
-
-  <div class="nota">
-    Idea física: una carga eléctrica modifica el espacio alrededor de ella. Si una carga de prueba
-    estuviera cerca, sentiría una fuerza. El campo eléctrico representa esa fuerza por unidad de carga.
-  </div>
-
-  <div id="sim-campo" class="sketch-area"></div>
-
-  <div class="validacion">
-    Validación física: si aumenta la carga, aumenta el campo eléctrico. Si aumenta la distancia,
-    el campo disminuye. Si la carga es positiva, el campo sale de ella; si es negativa, entra hacia ella.
-  </div>
-</section>
-
-<section id="gauss">
-  <h2>Simulación 2: Ley de Gauss para una esfera aislante</h2>
-
-  <p>
-    Esta simulación representa el campo eléctrico dentro y fuera de una esfera aislante
-    con carga distribuida uniformemente.
-  </p>
-
-  <div class="formula">
-    Para r &lt; R: E = kQr/R³ <br>
-    Para r ≥ R: E = kQ/r²
-  </div>
-
-  <p>
-    Dentro de la esfera el campo aumenta linealmente con r. Fuera de la esfera disminuye
-    como una carga puntual.
-  </p>
-
-  <div class="nota">
-    Idea física: dentro de la esfera no se encierra toda la carga, por eso el campo crece poco a poco.
-    Fuera de la esfera, el sistema se comporta como si toda la carga estuviera concentrada en el centro.
-  </div>
-
-  <div id="sim-gauss" class="sketch-area"></div>
-
-  <div class="validacion">
-    Validación física: en el centro de la esfera el campo debe ser cero. En r = R no debe
-    aparecer un salto brusco en la gráfica.
-  </div>
-</section>
-
-<section id="capacitor">
-  <h2>Simulación 3: Capacitor de placas paralelas</h2>
-
-  <p>
-    Esta simulación muestra cómo cambian la capacitancia, la carga almacenada, el campo
-    eléctrico y la energía de un capacitor de placas paralelas.
-  </p>
-
-  <div class="formula">
-    C = ε₀ εᵣ A / d <br>
-    Q = CV <br>
-    E = V / d <br>
-    U = 1/2 CV²
-  </div>
-
-  <p>
-    Donde A es el área de las placas, d es la separación, V es el voltaje aplicado y εᵣ
-    es la permitividad relativa del material dieléctrico.
-  </p>
-
-  <div class="nota">
-    Idea física: el capacitor almacena energía separando cargas en dos placas. Si las placas son más
-    grandes, puede almacenar más carga; si están más separadas, almacena menos.
-  </div>
-
-  <div id="sim-capacitor" class="sketch-area"></div>
-
-  <div class="validacion">
-    Validación física: al aumentar el área aumenta la capacitancia. Al aumentar la distancia
-    entre placas disminuye la capacitancia. Al aumentar el voltaje aumenta la carga almacenada.
-  </div>
-</section>
-
-<section id="ohm">
-  <h2>Simulación 4: Corriente eléctrica y Ley de Ohm</h2>
-
-  <p>
-    Esta simulación representa un circuito simple con una batería y una resistencia.
-    Permite observar cómo cambia la corriente al modificar el voltaje o la resistencia.
-  </p>
-
-  <div class="formula">
-    I = V / R <br>
-    P = VI
-  </div>
-
-  <p>
-    Donde V es voltaje, R es resistencia, I es corriente y P es potencia eléctrica.
-  </p>
-
-  <div class="nota">
-    Idea física: el voltaje empuja las cargas y la resistencia se opone al paso de la corriente.
-    Por eso, más voltaje produce más corriente y más resistencia produce menos corriente.
-  </div>
-
-  <div id="sim-ohm" class="sketch-area"></div>
-
-  <div class="validacion">
-    Validación física: si aumenta el voltaje, aumenta la corriente. Si aumenta la resistencia,
-    disminuye la corriente. La resistencia no debe ser cero para evitar división entre cero.
-  </div>
-</section>
-
-<section id="faraday">
-  <h2>Simulación 5: Inducción electromagnética</h2>
-
-  <p>
-    Esta simulación muestra cómo se genera una fem inducida cuando cambia el flujo magnético
-    a través de una espira.
-  </p>
-
-  <div class="formula">
-    ΦB = BA cos(θ) <br>
-    ε = -N dΦB/dt
-  </div>
-
-  <p>
-    En esta simulación se usa un campo magnético variable: B(t) = B₀ sin(ωt).
-    Por eso aparece una fem inducida que cambia en el tiempo.
-  </p>
-
-  <div class="nota">
-    Idea física: no basta con tener campo magnético. Para inducir voltaje, el flujo magnético debe cambiar
-    en el tiempo. Ese cambio es lo que produce la fem inducida.
-  </div>
-
-  <div id="sim-faraday" class="sketch-area"></div>
-
-  <div class="validacion">
-    Validación física: si el flujo magnético no cambia, la fem inducida debe ser cero.
-    Al aumentar N, A, B₀ o ω, aumenta la fem inducida.
-  </div>
-</section>
-
-<section id="uso-ia">
-  <h2>Uso de inteligencia artificial en el proyecto</h2>
-
-  <p>
-    La inteligencia artificial se utilizó como apoyo para organizar la página, generar una
-    estructura inicial de código, mejorar la presentación visual y revisar posibles errores
-    de fórmulas, unidades y comportamiento físico.
-  </p>
-
-  <p>
-    La responsabilidad final de la validez física corresponde al grupo. Por eso, cada simulación
-    incluye una sección de validación donde se explica qué debe ocurrir al modificar las variables.
-  </p>
-</section>
-
-<section>
-  <h2>Conclusión general</h2>
-  <p>
-    Las simulaciones permiten visualizar que las ecuaciones físicas no son solo fórmulas,
-    sino relaciones entre variables. Al mover los controles se observa cómo cambia cada
-    fenómeno y se puede comprobar si el resultado tiene sentido físico.
-  </p>
-</section>
-
-</main>
+</div>
 
 <footer>
-  <p>Proyecto Final de Física II - Simulaciones interactivas</p>
-  <p>Integrantes: Nombre 1, Nombre 2, Nombre 3</p>
+  <p>Proyecto Final Física II - Simulaciones Interactivas</p>
 </footer>
 
 <script>
-function sci(x, digits = 3) {
-  if (!isFinite(x)) return "No definido";
-  if (Math.abs(x) < 1e-12 && x !== 0) return x.toExponential(digits);
-  if (x === 0) return "0";
-  if (Math.abs(x) >= 1000 || Math.abs(x) < 0.01) return x.toExponential(digits);
-  return x.toFixed(digits);
-}
-
-function makeLabel(p, parentId, text) {
-  let label = p.createDiv(text);
-  label.parent(parentId);
-  label.addClass("control-label");
-  return label;
-}
-
-function drawArrow(p, x1, y1, x2, y2, col, weight = 3) {
-  p.stroke(col);
-  p.strokeWeight(weight);
-  p.line(x1, y1, x2, y2);
-
-  let ang = Math.atan2(y2 - y1, x2 - x1);
-  let size = 11;
-
-  p.push();
-  p.translate(x2, y2);
-  p.rotate(ang);
-  p.noStroke();
-  p.fill(col);
-  p.triangle(0, 0, -size, -size / 2, -size, size / 2);
-  p.pop();
-}
-
-/* ===============================
-   SIMULACIÓN 1: CAMPO ELÉCTRICO
-================================ */
-new p5(function(p) {
-  let qSlider, rSlider;
   const k = 8.99e9;
+  const eps0 = 8.854e-12;
 
-  p.setup = function() {
-    let canvas = p.createCanvas(860, 460);
-    canvas.parent("sim-campo");
+  let simulacionActual = "campo";
 
-    makeLabel(p, "sim-campo", "Carga q en nC");
-    qSlider = p.createSlider(-10, 10, 5, 0.5);
-    qSlider.parent("sim-campo");
-
-    makeLabel(p, "sim-campo", "Distancia r en m");
-    rSlider = p.createSlider(0.5, 5, 2, 0.1);
-    rSlider.parent("sim-campo");
+  const valores = {
+    campo: {
+      q: 5,
+      r: 2
+    },
+    gauss: {
+      Q: 10,
+      R: 3,
+      r: 2
+    },
+    capacitor: {
+      A: 0.4,
+      d: 10,
+      V: 20,
+      er: 1
+    },
+    ohm: {
+      V: 12,
+      R: 20
+    },
+    faraday: {
+      N: 10,
+      B0: 0.8,
+      A: 0.3,
+      w: 3,
+      theta: 30
+    }
   };
 
-  p.draw = function() {
-    p.background(250);
+  const info = {
+    campo: {
+      titulo: "Campo eléctrico de una carga puntual",
+      formula: "E = k |q| / r²",
+      idea: "Una carga eléctrica modifica el espacio alrededor de ella. El campo eléctrico indica la fuerza que sentiría una carga de prueba por unidad de carga.",
+      validacion: "Si aumenta la carga, aumenta E. Si aumenta la distancia, E disminuye con 1/r². Si la carga es positiva, el campo sale; si es negativa, entra.",
+      controles: [
+        { id: "q", nombre: "Carga q", unidad: "nC", min: -10, max: 10, step: 0.5 },
+        { id: "r", nombre: "Distancia r", unidad: "m", min: 0.5, max: 5, step: 0.1 }
+      ]
+    },
 
-    let q_nC = qSlider.value();
-    let r = rSlider.value();
-    let q = q_nC * 1e-9;
-    let E = k * Math.abs(q) / (r * r);
+    gauss: {
+      titulo: "Ley de Gauss para una esfera aislante",
+      formula: "Para r < R: E = kQr/R³ | Para r ≥ R: E = kQ/r²",
+      idea: "Dentro de una esfera aislante no se encierra toda la carga, por eso el campo aumenta poco a poco. Fuera se comporta como si toda la carga estuviera en el centro.",
+      validacion: "En r = 0 el campo debe ser cero. En r = R la gráfica no debe pegar un salto. Fuera de la esfera E disminuye como 1/r².",
+      controles: [
+        { id: "Q", nombre: "Carga total Q", unidad: "nC", min: 1, max: 20, step: 1 },
+        { id: "R", nombre: "Radio R", unidad: "m", min: 1, max: 5, step: 0.1 },
+        { id: "r", nombre: "Distancia r", unidad: "m", min: 0, max: 8, step: 0.1 }
+      ]
+    },
 
-    p.fill(17, 24, 39);
-    p.noStroke();
-    p.textSize(22);
-    p.text("Campo eléctrico de una carga puntual", 30, 35);
+    capacitor: {
+      titulo: "Capacitor de placas paralelas",
+      formula: "C = ε₀εᵣA/d | Q = CV | E = V/d | U = 1/2 CV²",
+      idea: "Un capacitor almacena energía separando cargas en dos placas. Si las placas son más grandes almacena más; si están más separadas almacena menos.",
+      validacion: "Al aumentar A aumenta C. Al aumentar d disminuye C. Al aumentar V aumenta Q y también aumenta la energía almacenada.",
+      controles: [
+        { id: "A", nombre: "Área A", unidad: "m²", min: 0.05, max: 1, step: 0.05 },
+        { id: "d", nombre: "Distancia d", unidad: "mm", min: 1, max: 50, step: 1 },
+        { id: "V", nombre: "Voltaje V", unidad: "V", min: 1, max: 100, step: 1 },
+        { id: "er", nombre: "Permitividad relativa εr", unidad: "", min: 1, max: 10, step: 0.5 }
+      ]
+    },
 
-    p.textSize(16);
-    p.text("q = " + q_nC.toFixed(1) + " nC", 30, 80);
-    p.text("r = " + r.toFixed(2) + " m", 30, 105);
-    p.text("E = " + sci(E, 3) + " N/C", 30, 130);
+    ohm: {
+      titulo: "Corriente eléctrica y Ley de Ohm",
+      formula: "I = V/R | P = VI",
+      idea: "El voltaje empuja las cargas y la resistencia se opone al paso de la corriente. Por eso más voltaje produce más corriente y más resistencia produce menos corriente.",
+      validacion: "Si aumenta V, aumenta I. Si aumenta R, disminuye I. R nunca debe ser cero porque causaría una división entre cero.",
+      controles: [
+        { id: "V", nombre: "Voltaje V", unidad: "V", min: 1, max: 50, step: 1 },
+        { id: "R", nombre: "Resistencia R", unidad: "Ω", min: 1, max: 100, step: 1 }
+      ]
+    },
 
-    p.text("La dirección del campo depende del signo de la carga.", 30, 170);
-
-    let cx = 420;
-    let cy = 245;
-    let pointX = cx + r * 70;
-    let pointY = cy;
-
-    // Líneas de campo animadas
-    let pulse = 10 * Math.sin(p.frameCount * 0.05);
-    for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
-      let dir = q_nC >= 0 ? 1 : -1;
-      let x1 = cx + Math.cos(a) * (45 + pulse);
-      let y1 = cy + Math.sin(a) * (45 + pulse);
-      let x2 = cx + Math.cos(a) * (105 + pulse) * dir;
-      let y2 = cy + Math.sin(a) * (105 + pulse) * dir;
-
-      if (q_nC !== 0) {
-        drawArrow(p, x1, y1, x2, y2, p.color(37, 99, 235, 120), 2);
-      }
+    faraday: {
+      titulo: "Inducción electromagnética",
+      formula: "ΦB = BA cos(θ) | ε = -N dΦB/dt",
+      idea: "No basta con tener campo magnético. Para inducir voltaje, el flujo magnético debe cambiar en el tiempo. Ese cambio produce la fem inducida.",
+      validacion: "Si el flujo no cambia, ε = 0. Al aumentar N, A, B₀ o ω, aumenta la magnitud de la fem inducida.",
+      controles: [
+        { id: "N", nombre: "Número de vueltas N", unidad: "", min: 1, max: 50, step: 1 },
+        { id: "B0", nombre: "Campo máximo B₀", unidad: "T", min: 0.1, max: 2, step: 0.1 },
+        { id: "A", nombre: "Área A", unidad: "m²", min: 0.05, max: 1, step: 0.05 },
+        { id: "w", nombre: "Frecuencia angular ω", unidad: "rad/s", min: 1, max: 10, step: 0.5 },
+        { id: "theta", nombre: "Ángulo θ", unidad: "°", min: 0, max: 90, step: 1 }
+      ]
     }
-
-    // Distancia
-    p.stroke(150);
-    p.strokeWeight(2);
-    p.line(cx, cy, pointX, pointY);
-    p.noStroke();
-    p.fill(75);
-    p.text("r", (cx + pointX) / 2, cy - 12);
-
-    // Carga central
-    p.noStroke();
-    if (q_nC >= 0) {
-      p.fill(239, 68, 68);
-    } else {
-      p.fill(37, 99, 235);
-    }
-    p.circle(cx, cy, 68);
-
-    p.fill(255);
-    p.textSize(36);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text(q_nC >= 0 ? "+" : "-", cx, cy - 2);
-
-    // Punto de análisis
-    p.fill(17, 24, 39);
-    p.circle(pointX, pointY, 12);
-    p.textSize(14);
-    p.text("P", pointX, pointY - 25);
-
-    // Vector E en P
-    let dir = q_nC >= 0 ? 1 : -1;
-    if (Math.abs(q_nC) > 0.01) {
-      let arrowLength = Math.min(115, 25 + E / 20);
-      drawArrow(p, pointX, pointY, pointX + dir * arrowLength, pointY, p.color(239, 68, 68), 4);
-      p.noStroke();
-      p.fill(17, 24, 39);
-      p.textAlign(p.LEFT, p.BASELINE);
-      p.text("Vector E", pointX + dir * arrowLength - 25, pointY - 18);
-    }
-
-    p.textAlign(p.LEFT, p.BASELINE);
-    p.noStroke();
-    p.fill(17, 24, 39);
-    p.textSize(14);
-    p.text("Prueba: al duplicar r, el campo baja cuatro veces porque depende de 1/r².", 30, 415);
-  };
-}, "sim-campo");
-
-
-/* ===============================
-   SIMULACIÓN 2: LEY DE GAUSS
-================================ */
-new p5(function(p) {
-  let QSlider, RSlider, rSlider;
-  const k = 8.99e9;
-
-  p.setup = function() {
-    let canvas = p.createCanvas(860, 480);
-    canvas.parent("sim-gauss");
-
-    makeLabel(p, "sim-gauss", "Carga total Q en nC");
-    QSlider = p.createSlider(1, 20, 10, 1);
-    QSlider.parent("sim-gauss");
-
-    makeLabel(p, "sim-gauss", "Radio de la esfera R en m");
-    RSlider = p.createSlider(1, 5, 3, 0.1);
-    RSlider.parent("sim-gauss");
-
-    makeLabel(p, "sim-gauss", "Distancia r en m");
-    rSlider = p.createSlider(0, 8, 2, 0.1);
-    rSlider.parent("sim-gauss");
   };
 
-  function campo(Q, R, r) {
+  function abrirSimulacion(nombre) {
+    simulacionActual = nombre;
+    actualizarPanel();
+    document.getElementById("visor").scrollIntoView();
+  }
+
+  function volverMenu() {
+    document.getElementById("menu").scrollIntoView();
+  }
+
+  function actualizarPanel() {
+    const datos = info[simulacionActual];
+
+    document.getElementById("tituloSim").textContent = datos.titulo;
+    document.getElementById("formulaSim").textContent = "Fórmula: " + datos.formula;
+    document.getElementById("ideaSim").textContent = datos.idea;
+    document.getElementById("validacionSim").textContent = "Validación física: " + datos.validacion;
+
+    const contenedor = document.getElementById("controles");
+    contenedor.innerHTML = "";
+
+    datos.controles.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "control";
+
+      const valorActual = valores[simulacionActual][c.id];
+
+      div.innerHTML = `
+        <label>${c.nombre}</label>
+        <input
+          type="range"
+          min="${c.min}"
+          max="${c.max}"
+          step="${c.step}"
+          value="${valorActual}"
+          oninput="cambiarValor('${simulacionActual}', '${c.id}', this.value)"
+        >
+        <div class="valor-control" id="valor-${c.id}">
+          ${valorActual} ${c.unidad}
+        </div>
+      `;
+
+      contenedor.appendChild(div);
+    });
+  }
+
+  function cambiarValor(sim, id, valor) {
+    valores[sim][id] = Number(valor);
+    actualizarPanel();
+  }
+
+  function sci(x, digits = 3) {
+    if (!isFinite(x)) return "No definido";
+    if (x === 0) return "0";
+    if (Math.abs(x) >= 1000 || Math.abs(x) < 0.01) {
+      return x.toExponential(digits);
+    }
+    return x.toFixed(digits);
+  }
+
+  function campoGauss(Q, R, r) {
     if (r === 0) return 0;
+
     if (r < R) {
       return k * Q * r / Math.pow(R, 3);
     }
+
     return k * Q / (r * r);
   }
 
-  p.draw = function() {
-    p.background(250);
+  function flecha(p, x1, y1, x2, y2, col, grosor = 3) {
+    p.stroke(col);
+    p.strokeWeight(grosor);
+    p.line(x1, y1, x2, y2);
 
-    let Q = QSlider.value() * 1e-9;
-    let QnC = QSlider.value();
-    let R = RSlider.value();
-    let r = rSlider.value();
-    let E = campo(Q, R, r);
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const tam = 11;
 
+    p.push();
+    p.translate(x2, y2);
+    p.rotate(ang);
+    p.noStroke();
+    p.fill(col);
+    p.triangle(0, 0, -tam, -tam / 2, -tam, tam / 2);
+    p.pop();
+  }
+
+  new p5(function(p) {
+    p.setup = function() {
+      const canvas = p.createCanvas(900, 500);
+      canvas.parent("canvasSim");
+      actualizarPanel();
+    };
+
+    p.draw = function() {
+      p.background(250);
+
+      if (simulacionActual === "campo") dibujarCampo(p);
+      if (simulacionActual === "gauss") dibujarGauss(p);
+      if (simulacionActual === "capacitor") dibujarCapacitor(p);
+      if (simulacionActual === "ohm") dibujarOhm(p);
+      if (simulacionActual === "faraday") dibujarFaraday(p);
+    };
+  }, "canvasSim");
+
+  function tituloCanvas(p, texto) {
     p.fill(17, 24, 39);
     p.noStroke();
-    p.textSize(22);
-    p.text("Ley de Gauss: esfera aislante cargada", 30, 35);
+    p.textSize(24);
+    p.text(texto, 30, 40);
+  }
+
+  function dibujarCampo(p) {
+    const q_nC = valores.campo.q;
+    const r = valores.campo.r;
+    const q = q_nC * 1e-9;
+    const E = k * Math.abs(q) / (r * r);
+
+    tituloCanvas(p, "Campo eléctrico de una carga puntual");
 
     p.textSize(16);
-    p.text("Q = " + QnC + " nC", 30, 75);
-    p.text("R = " + R.toFixed(1) + " m", 30, 100);
-    p.text("r = " + r.toFixed(1) + " m", 30, 125);
-    p.text("E = " + sci(E, 3) + " N/C", 30, 150);
+    p.fill(17, 24, 39);
+    p.text("q = " + q_nC.toFixed(1) + " nC", 30, 85);
+    p.text("r = " + r.toFixed(2) + " m", 30, 110);
+    p.text("E = " + sci(E, 3) + " N/C", 30, 135);
 
-    let cx = 235;
-    let cy = 310;
-    let radiusPix = R * 36;
-    let pointPix = r * 36;
+    const cx = 430;
+    const cy = 260;
+    const px = cx + r * 75;
+    const py = cy;
 
-    // Esfera
+    const pulso = 8 * Math.sin(p.frameCount * 0.06);
+
+    for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+      const dir = q_nC >= 0 ? 1 : -1;
+
+      if (q_nC !== 0) {
+        const x1 = cx + Math.cos(a) * (50 + pulso);
+        const y1 = cy + Math.sin(a) * (50 + pulso);
+        const x2 = cx + Math.cos(a) * (120 + pulso) * dir;
+        const y2 = cy + Math.sin(a) * (120 + pulso) * dir;
+
+        flecha(p, x1, y1, x2, y2, p.color(37, 99, 235, 130), 2);
+      }
+    }
+
+    p.noStroke();
+    p.fill(q_nC >= 0 ? "#ef4444" : "#2563eb");
+    p.circle(cx, cy, 75);
+
+    p.fill(255);
+    p.textSize(40);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text(q_nC >= 0 ? "+" : "-", cx, cy - 3);
+
+    p.textAlign(p.LEFT, p.BASELINE);
+
+    p.stroke(100);
+    p.strokeWeight(2);
+    p.line(cx, cy, px, py);
+
+    p.noStroke();
+    p.fill(17, 24, 39);
+    p.circle(px, py, 12);
+    p.text("P", px - 5, py - 25);
+    p.text("Distancia r", (cx + px) / 2 - 35, cy - 12);
+
+    const dir = q_nC >= 0 ? 1 : -1;
+    const largo = Math.min(130, 25 + E / 20);
+
+    if (Math.abs(q_nC) > 0.01) {
+      flecha(p, px, py, px + dir * largo, py, p.color(239, 68, 68), 5);
+      p.noStroke();
+      p.fill(17, 24, 39);
+      p.text("Vector E", px + dir * largo - 30, py - 18);
+    }
+
+    p.textSize(14);
+    p.text("La intensidad baja rápido cuando aumenta la distancia porque E depende de 1/r².", 30, 455);
+  }
+
+  function dibujarGauss(p) {
+    const QnC = valores.gauss.Q;
+    const Q = QnC * 1e-9;
+    const R = valores.gauss.R;
+    const r = valores.gauss.r;
+    const E = campoGauss(Q, R, r);
+
+    tituloCanvas(p, "Ley de Gauss: esfera aislante cargada");
+
+    p.textSize(16);
+    p.fill(17, 24, 39);
+    p.text("Q = " + QnC + " nC", 30, 85);
+    p.text("R = " + R.toFixed(1) + " m", 30, 110);
+    p.text("r = " + r.toFixed(1) + " m", 30, 135);
+    p.text("E = " + sci(E, 3) + " N/C", 30, 160);
+
+    const cx = 240;
+    const cy = 320;
+    const escala = 38;
+    const radioPix = R * escala;
+    const rPix = r * escala;
+
     p.stroke(37, 99, 235);
     p.strokeWeight(3);
     p.fill(219, 234, 254);
-    p.circle(cx, cy, radiusPix * 2);
+    p.circle(cx, cy, radioPix * 2);
 
-    // Cargas pequeñas dentro
     p.noStroke();
-    p.fill(37, 99, 235, 130);
-    for (let i = 0; i < 18; i++) {
-      let ang = i * 2.399 + p.frameCount * 0.002;
-      let rr = (radiusPix * 0.75) * ((i % 5 + 1) / 5);
-      p.circle(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr, 6);
-    }
+    p.fill(37, 99, 235, 120);
 
-    p.fill(17, 24, 39);
-    p.circle(cx, cy, 5);
-    p.text("Centro", cx - 25, cy + 25);
+    for (let i = 0; i < 20; i++) {
+      const ang = i * 2.4 + p.frameCount * 0.003;
+      const rr = radioPix * 0.8 * ((i % 5 + 1) / 5);
+      p.circle(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr, 7);
+    }
 
     p.stroke(239, 68, 68);
     p.strokeWeight(3);
-    p.line(cx, cy, cx + pointPix, cy);
+    p.line(cx, cy, cx + rPix, cy);
 
     p.noStroke();
     p.fill(239, 68, 68);
-    p.circle(cx + pointPix, cy, 12);
+    p.circle(cx + rPix, cy, 12);
+
     p.fill(17, 24, 39);
-    p.text("r", cx + pointPix + 10, cy - 10);
+    p.text("Esfera aislante", cx - 55, cy - radioPix - 15);
+    p.text("r", cx + rPix + 12, cy - 8);
 
-    p.text("Esfera aislante", cx - 50, cy - radiusPix - 15);
-
-    // Gráfica
-    let graphX = 450;
-    let graphY = 365;
-    let graphW = 350;
-    let graphH = 240;
+    const gx = 470;
+    const gy = 380;
+    const gw = 350;
+    const gh = 250;
 
     p.stroke(17, 24, 39);
     p.strokeWeight(2);
-    p.line(graphX, graphY, graphX + graphW, graphY);
-    p.line(graphX, graphY, graphX, graphY - graphH);
+    p.line(gx, gy, gx + gw, gy);
+    p.line(gx, gy, gx, gy - gh);
 
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("r", graphX + graphW + 10, graphY + 5);
-    p.text("E", graphX - 20, graphY - graphH - 5);
-    p.text("Gráfica E vs r", graphX + 105, graphY - graphH - 18);
+    p.text("Gráfica E vs r", gx + 105, gy - gh - 16);
+    p.text("r", gx + gw + 12, gy + 5);
+    p.text("E", gx - 18, gy - gh - 5);
 
-    let maxR = 8;
     let maxE = 0;
-    for (let i = 0; i <= 150; i++) {
-      let rr = (i / 150) * maxR;
-      maxE = Math.max(maxE, campo(Q, R, rr));
+
+    for (let i = 0; i <= 120; i++) {
+      const rr = (i / 120) * 8;
+      maxE = Math.max(maxE, campoGauss(Q, R, rr));
     }
 
     p.stroke(37, 99, 235);
     p.strokeWeight(3);
     p.noFill();
     p.beginShape();
-    for (let i = 0; i <= 150; i++) {
-      let rr = (i / 150) * maxR;
-      let EE = campo(Q, R, rr);
-      let x = graphX + (rr / maxR) * graphW;
-      let y = graphY - (EE / maxE) * graphH;
+
+    for (let i = 0; i <= 120; i++) {
+      const rr = (i / 120) * 8;
+      const EE = campoGauss(Q, R, rr);
+      const x = gx + (rr / 8) * gw;
+      const y = gy - (EE / maxE) * gh;
       p.vertex(x, y);
     }
+
     p.endShape();
 
-    let pointX = graphX + (r / maxR) * graphW;
-    let pointY = graphY - (E / maxE) * graphH;
+    const px = gx + (r / 8) * gw;
+    const py = gy - (E / maxE) * gh;
 
     p.noStroke();
     p.fill(239, 68, 68);
-    p.circle(pointX, pointY, 10);
+    p.circle(px, py, 10);
 
-    let RX = graphX + (R / maxR) * graphW;
+    const rx = gx + (R / 8) * gw;
+
     p.stroke(100);
     p.drawingContext.setLineDash([5, 5]);
-    p.line(RX, graphY, RX, graphY - graphH);
+    p.line(rx, gy, rx, gy - gh);
     p.drawingContext.setLineDash([]);
-    p.noStroke();
-    p.fill(17, 24, 39);
-    p.text("R", RX - 5, graphY + 18);
-
-    p.text("Dentro: E crece linealmente", 450, 420);
-    p.text("Fuera: E baja como 1/r²", 450, 445);
-  };
-}, "sim-gauss");
-
-
-/* ===============================
-   SIMULACIÓN 3: CAPACITOR
-================================ */
-new p5(function(p) {
-  let ASlider, dSlider, VSlider, erSlider;
-  const eps0 = 8.854e-12;
-
-  p.setup = function() {
-    let canvas = p.createCanvas(860, 500);
-    canvas.parent("sim-capacitor");
-
-    makeLabel(p, "sim-capacitor", "Área A en m²");
-    ASlider = p.createSlider(0.05, 1.0, 0.40, 0.05);
-    ASlider.parent("sim-capacitor");
-
-    makeLabel(p, "sim-capacitor", "Distancia d en mm");
-    dSlider = p.createSlider(1, 50, 10, 1);
-    dSlider.parent("sim-capacitor");
-
-    makeLabel(p, "sim-capacitor", "Voltaje V en voltios");
-    VSlider = p.createSlider(1, 100, 20, 1);
-    VSlider.parent("sim-capacitor");
-
-    makeLabel(p, "sim-capacitor", "Permitividad relativa εr");
-    erSlider = p.createSlider(1, 10, 1, 0.5);
-    erSlider.parent("sim-capacitor");
-  };
-
-  function barra(x, y, valor, maximo, texto, color) {
-    let w = 180;
-    let h = 14;
-    let llenado = p.map(valor, 0, maximo, 0, w, true);
 
     p.noStroke();
-    p.fill(230);
-    p.rect(x, y, w, h, 7);
-    p.fill(color);
-    p.rect(x, y, llenado, h, 7);
     p.fill(17, 24, 39);
-    p.text(texto, x, y - 6);
+    p.text("R", rx - 5, gy + 20);
+    p.text("Dentro: E aumenta linealmente", gx, 430);
+    p.text("Fuera: E disminuye como 1/r²", gx, 455);
   }
 
-  p.draw = function() {
-    p.background(250);
+  function dibujarCapacitor(p) {
+    const A = valores.capacitor.A;
+    const dmm = valores.capacitor.d;
+    const d = dmm / 1000;
+    const V = valores.capacitor.V;
+    const er = valores.capacitor.er;
 
-    let A = ASlider.value();
-    let dmm = dSlider.value();
-    let d = dmm / 1000;
-    let V = VSlider.value();
-    let er = erSlider.value();
+    const C = eps0 * er * A / d;
+    const Q = C * V;
+    const E = V / d;
+    const U = 0.5 * C * V * V;
 
-    let C = eps0 * er * A / d;
-    let Q = C * V;
-    let E = V / d;
-    let U = 0.5 * C * V * V;
-
-    p.fill(17, 24, 39);
-    p.noStroke();
-    p.textSize(22);
-    p.text("Capacitor de placas paralelas", 30, 35);
+    tituloCanvas(p, "Capacitor de placas paralelas");
 
     p.textSize(16);
-    p.text("A = " + A.toFixed(2) + " m²", 30, 75);
-    p.text("d = " + dmm.toFixed(0) + " mm", 30, 100);
-    p.text("V = " + V.toFixed(0) + " V", 30, 125);
-    p.text("εr = " + er.toFixed(1), 30, 150);
+    p.fill(17, 24, 39);
+    p.text("A = " + A.toFixed(2) + " m²", 30, 85);
+    p.text("d = " + dmm.toFixed(0) + " mm", 30, 110);
+    p.text("V = " + V.toFixed(0) + " V", 30, 135);
+    p.text("εr = " + er.toFixed(1), 30, 160);
 
-    p.text("C = " + sci(C, 3) + " F", 30, 200);
-    p.text("Q = " + sci(Q, 3) + " C", 30, 225);
-    p.text("E = " + sci(E, 3) + " V/m", 30, 250);
-    p.text("U = " + sci(U, 3) + " J", 30, 275);
+    p.text("C = " + sci(C, 3) + " F", 30, 210);
+    p.text("Q = " + sci(Q, 3) + " C", 30, 235);
+    p.text("E = " + sci(E, 3) + " V/m", 30, 260);
+    p.text("U = " + sci(U, 3) + " J", 30, 285);
 
-    barra(30, 330, C, 8.854e-9, "Capacitancia relativa", p.color(37, 99, 235));
-    barra(30, 370, Q, 8.854e-7, "Carga relativa", p.color(239, 68, 68));
-    barra(30, 410, U, 4e-5, "Energía relativa", p.color(4, 120, 87));
+    const x1 = 500;
+    const gap = dmm * 4;
+    const x2 = x1 + gap;
+    const h = Math.min(260, 110 + A * 150);
+    const y1 = 270 - h / 2;
+    const y2 = 270 + h / 2;
 
-    let x1 = 490;
-    let gap = dmm * 4;
-    let x2 = x1 + gap;
-    let plateH = Math.min(250, 100 + A * 150);
-    let yTop = 260 - plateH / 2;
-    let yBottom = 260 + plateH / 2;
-
-    // Dieléctrico
     p.noStroke();
-    p.fill(254, 243, 199, 120);
-    p.rect(x1 + 8, yTop, x2 - x1 - 16, plateH, 12);
+    p.fill(254, 243, 199, 130);
+    p.rect(x1 + 8, y1, x2 - x1 - 16, h, 12);
 
-    // Placas
     p.stroke(17, 24, 39);
     p.strokeWeight(8);
-    p.line(x1, yTop, x1, yBottom);
-    p.line(x2, yTop, x2, yBottom);
+    p.line(x1, y1, x1, y2);
+    p.line(x2, y1, x2, y2);
 
     p.noStroke();
     p.fill(239, 68, 68);
-    for (let y = yTop + 20; y <= yBottom - 20; y += 26) {
-      p.text("+", x1 - 35, y + 5);
+    for (let y = y1 + 22; y <= y2 - 20; y += 28) {
+      p.text("+", x1 - 35, y);
     }
 
     p.fill(37, 99, 235);
-    for (let y = yTop + 20; y <= yBottom - 20; y += 26) {
-      p.text("-", x2 + 20, y + 5);
+    for (let y = y1 + 22; y <= y2 - 20; y += 28) {
+      p.text("-", x2 + 22, y);
     }
 
-    // Campo eléctrico
-    for (let y = yTop + 25; y <= yBottom - 25; y += 35) {
-      drawArrow(p, x1 + 22, y, x2 - 22, y, p.color(37, 99, 235), 2);
+    for (let y = y1 + 30; y <= y2 - 30; y += 38) {
+      flecha(p, x1 + 25, y, x2 - 25, y, p.color(37, 99, 235), 2);
     }
 
-    // Partículas animadas
-    let t = (p.frameCount % 120) / 120;
     p.noStroke();
-    p.fill(37, 99, 235);
-    for (let i = 0; i < 5; i++) {
-      let yy = yTop + 35 + i * 35;
-      let xx = p.lerp(x1 + 35, x2 - 35, (t + i * 0.18) % 1);
-      p.circle(xx, yy, 6);
-    }
-
     p.fill(17, 24, 39);
-    p.textSize(15);
     p.text("Campo eléctrico entre placas", 500, 430);
-    p.text("Al aumentar d, C disminuye", 500, 455);
-  };
-}, "sim-capacitor");
+    p.text("Si d aumenta, C disminuye", 500, 455);
+  }
 
+  function dibujarOhm(p) {
+    const V = valores.ohm.V;
+    const R = valores.ohm.R;
+    const I = V / R;
+    const P = V * I;
 
-/* ===============================
-   SIMULACIÓN 4: LEY DE OHM
-================================ */
-new p5(function(p) {
-  let VSlider, RSlider;
-
-  p.setup = function() {
-    let canvas = p.createCanvas(860, 460);
-    canvas.parent("sim-ohm");
-
-    makeLabel(p, "sim-ohm", "Voltaje V en voltios");
-    VSlider = p.createSlider(1, 50, 12, 1);
-    VSlider.parent("sim-ohm");
-
-    makeLabel(p, "sim-ohm", "Resistencia R en ohmios");
-    RSlider = p.createSlider(1, 100, 20, 1);
-    RSlider.parent("sim-ohm");
-  };
-
-  p.draw = function() {
-    p.background(250);
-
-    let V = VSlider.value();
-    let R = RSlider.value();
-    let I = V / R;
-    let P = V * I;
-
-    p.fill(17, 24, 39);
-    p.noStroke();
-    p.textSize(22);
-    p.text("Corriente eléctrica: Ley de Ohm", 30, 35);
+    tituloCanvas(p, "Corriente eléctrica: Ley de Ohm");
 
     p.textSize(16);
-    p.text("V = " + V + " V", 30, 80);
-    p.text("R = " + R + " Ω", 30, 105);
-    p.text("I = " + I.toFixed(3) + " A", 30, 130);
-    p.text("P = " + P.toFixed(3) + " W", 30, 155);
+    p.fill(17, 24, 39);
+    p.text("V = " + V + " V", 30, 85);
+    p.text("R = " + R + " Ω", 30, 110);
+    p.text("I = " + I.toFixed(3) + " A", 30, 135);
+    p.text("P = " + P.toFixed(3) + " W", 30, 160);
 
-    p.text("I = V/R", 30, 205);
-    p.text("P = VI", 30, 230);
+    p.text("I = V/R", 30, 210);
+    p.text("P = VI", 30, 235);
 
-    let speed = Math.min(8, 1 + I * 3);
+    const left = 390;
+    const right = 720;
+    const top = 130;
+    const bottom = 350;
 
-    // Circuito
     p.stroke(17, 24, 39);
     p.strokeWeight(4);
     p.noFill();
-
-    let left = 380;
-    let right = 690;
-    let top = 115;
-    let bottom = 330;
 
     p.line(left, top, right, top);
     p.line(right, top, right, bottom);
     p.line(right, bottom, left, bottom);
     p.line(left, bottom, left, top);
 
-    // Resistencia
     p.fill(255);
-    p.rect(500, 80, 110, 70, 8);
+    p.rect(515, 95, 120, 70, 8);
+
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("R", 548, 123);
-    p.text("Resistencia", 510, 70);
+    p.text("Resistencia", 528, 88);
+    p.text("R", 565, 138);
 
-    // Batería
     p.stroke(17, 24, 39);
     p.strokeWeight(4);
-    p.line(360, 190, 405, 190);
-    p.line(372, 225, 393, 225);
+    p.line(370, 210, 410, 210);
+    p.line(382, 245, 398, 245);
+
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("Batería", 335, 258);
+    p.text("Batería", 345, 275);
 
-    // Electrones animados
+    const speed = Math.min(8, 1 + I * 3);
+
     p.noStroke();
     p.fill(37, 99, 235);
-    for (let i = 0; i < 9; i++) {
-      let offset = (p.frameCount * speed + i * 55) % 820;
-      let x, y;
 
-      if (offset < 310) {
+    for (let i = 0; i < 9; i++) {
+      const offset = (p.frameCount * speed + i * 65) % 900;
+      let x = left;
+      let y = bottom;
+
+      if (offset < 330) {
         x = left + offset;
         y = bottom;
-      } else if (offset < 525) {
+      } else if (offset < 550) {
         x = right;
-        y = bottom - (offset - 310);
-      } else if (offset < 835) {
-        x = right - (offset - 525);
+        y = bottom - (offset - 330);
+      } else if (offset < 880) {
+        x = right - (offset - 550);
         y = top;
       } else {
         x = left;
-        y = top + (offset - 835);
+        y = top + (offset - 880);
       }
 
       p.circle(x, y, 9);
     }
 
-    drawArrow(p, 430, bottom, 535, bottom, p.color(239, 68, 68), 4);
+    flecha(p, 440, bottom, 560, bottom, p.color(239, 68, 68), 5);
 
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("Flecha roja: sentido convencional de la corriente", 420, 380);
-    p.text("Más voltaje → más corriente. Más resistencia → menos corriente.", 420, 405);
-  };
-}, "sim-ohm");
+    p.text("Flecha roja: sentido convencional de la corriente", 430, 410);
+    p.text("Los puntos azules representan movimiento de cargas.", 430, 435);
+  }
 
+  function dibujarFaraday(p) {
+    const N = valores.faraday.N;
+    const B0 = valores.faraday.B0;
+    const A = valores.faraday.A;
+    const w = valores.faraday.w;
+    const thetaDeg = valores.faraday.theta;
+    const theta = p.radians(thetaDeg);
+    const t = p.frameCount / 30;
 
-/* ===============================
-   SIMULACIÓN 5: FARADAY
-================================ */
-new p5(function(p) {
-  let NSlider, BSlider, ASlider, wSlider, thetaSlider;
+    const Bactual = B0 * Math.sin(w * t);
+    const phi = B0 * A * Math.cos(theta) * Math.sin(w * t);
+    const fem = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * t);
 
-  p.setup = function() {
-    let canvas = p.createCanvas(860, 520);
-    canvas.parent("sim-faraday");
-
-    makeLabel(p, "sim-faraday", "Número de vueltas N");
-    NSlider = p.createSlider(1, 50, 10, 1);
-    NSlider.parent("sim-faraday");
-
-    makeLabel(p, "sim-faraday", "Campo máximo B₀ en teslas");
-    BSlider = p.createSlider(0.1, 2.0, 0.8, 0.1);
-    BSlider.parent("sim-faraday");
-
-    makeLabel(p, "sim-faraday", "Área A en m²");
-    ASlider = p.createSlider(0.05, 1.0, 0.30, 0.05);
-    ASlider.parent("sim-faraday");
-
-    makeLabel(p, "sim-faraday", "Frecuencia angular ω en rad/s");
-    wSlider = p.createSlider(1, 10, 3, 0.5);
-    wSlider.parent("sim-faraday");
-
-    makeLabel(p, "sim-faraday", "Ángulo θ en grados");
-    thetaSlider = p.createSlider(0, 90, 30, 1);
-    thetaSlider.parent("sim-faraday");
-  };
-
-  p.draw = function() {
-    p.background(250);
-
-    let N = NSlider.value();
-    let B0 = BSlider.value();
-    let A = ASlider.value();
-    let w = wSlider.value();
-    let thetaDeg = thetaSlider.value();
-    let theta = p.radians(thetaDeg);
-    let t = p.frameCount / 30;
-
-    let phi = B0 * A * Math.cos(theta) * Math.sin(w * t);
-    let fem = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * t);
-    let Bactual = B0 * Math.sin(w * t);
-
-    p.fill(17, 24, 39);
-    p.noStroke();
-    p.textSize(22);
-    p.text("Inducción electromagnética: Ley de Faraday", 30, 35);
+    tituloCanvas(p, "Inducción electromagnética: Ley de Faraday");
 
     p.textSize(16);
-    p.text("N = " + N, 30, 75);
-    p.text("B₀ = " + B0.toFixed(1) + " T", 30, 100);
-    p.text("A = " + A.toFixed(2) + " m²", 30, 125);
-    p.text("ω = " + w.toFixed(1) + " rad/s", 30, 150);
-    p.text("θ = " + thetaDeg + "°", 30, 175);
+    p.fill(17, 24, 39);
+    p.text("N = " + N, 30, 85);
+    p.text("B₀ = " + B0.toFixed(1) + " T", 30, 110);
+    p.text("A = " + A.toFixed(2) + " m²", 30, 135);
+    p.text("ω = " + w.toFixed(1) + " rad/s", 30, 160);
+    p.text("θ = " + thetaDeg + "°", 30, 185);
 
-    p.text("B(t) = " + Bactual.toFixed(3) + " T", 30, 220);
-    p.text("Flujo ΦB = " + phi.toFixed(4) + " Wb", 30, 245);
-    p.text("Fem inducida ε = " + fem.toFixed(4) + " V", 30, 270);
+    p.text("B(t) = " + Bactual.toFixed(3) + " T", 30, 230);
+    p.text("ΦB = " + phi.toFixed(4) + " Wb", 30, 255);
+    p.text("ε = " + fem.toFixed(4) + " V", 30, 280);
 
-    let cx = 320;
-    let cy = 365;
+    const cx = 320;
+    const cy = 365;
 
-    // Campo magnético animado
-    let fieldColor = Bactual >= 0 ? p.color(37, 99, 235) : p.color(239, 68, 68);
+    const colorCampo = Bactual >= 0 ? p.color(37, 99, 235) : p.color(239, 68, 68);
+
     for (let x = 220; x <= 420; x += 40) {
       if (Bactual >= 0) {
-        drawArrow(p, x, 285, x, 440, fieldColor, 2);
+        flecha(p, x, 285, x, 440, colorCampo, 2);
       } else {
-        drawArrow(p, x, 440, x, 285, fieldColor, 2);
+        flecha(p, x, 440, x, 285, colorCampo, 2);
       }
     }
 
     p.noStroke();
-    p.fill(fieldColor);
-    p.text("Campo magnético variable B(t)", 225, 265);
+    p.fill(colorCampo);
+    p.text("Campo magnético variable", 225, 265);
 
-    // Espira
     p.stroke(17, 24, 39);
     p.strokeWeight(4);
     p.noFill();
-    p.ellipse(cx, cy, 170, 95);
+    p.ellipse(cx, cy, 180, 100);
 
-    // Giro visual según theta
-    p.stroke(80);
-    p.strokeWeight(2);
-    let normalLen = 70;
-    drawArrow(
+    flecha(
       p,
       cx,
       cy,
-      cx + normalLen * Math.cos(theta),
-      cy - normalLen * Math.sin(theta),
+      cx + 75 * Math.cos(theta),
+      cy - 75 * Math.sin(theta),
       p.color(17, 24, 39),
       2
     );
 
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("Espira", cx - 25, cy + 75);
+    p.text("Espira", cx - 25, cy + 78);
     p.text("Normal", cx + 60, cy - 55);
 
-    // Indicador de fem
-    let femInt = p.map(Math.abs(fem), 0, Math.max(0.001, N * B0 * A * w), 0, 1, true);
-    p.noFill();
-    p.stroke(239, 68, 68, 80 + 150 * femInt);
-    p.strokeWeight(3 + 3 * femInt);
-    p.arc(cx, cy, 205, 130, p.frameCount * 0.05, p.frameCount * 0.05 + Math.PI * 1.4);
-
-    // Gráfica fem(t)
-    let graphX = 520;
-    let graphY = 385;
-    let graphW = 290;
-    let graphH = 250;
+    const gx = 520;
+    const gy = 380;
+    const gw = 300;
+    const gh = 240;
 
     p.stroke(17, 24, 39);
     p.strokeWeight(2);
-    p.line(graphX, graphY, graphX + graphW, graphY);
-    p.line(graphX, graphY - graphH / 2, graphX + graphW, graphY - graphH / 2);
-    p.line(graphX, graphY - graphH, graphX + graphW, graphY - graphH);
-    p.line(graphX, graphY, graphX, graphY - graphH);
+    p.line(gx, gy, gx + gw, gy);
+    p.line(gx, gy - gh / 2, gx + gw, gy - gh / 2);
+    p.line(gx, gy - gh, gx + gw, gy - gh);
+    p.line(gx, gy, gx, gy - gh);
 
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("Gráfica de ε(t)", graphX + 85, graphY - graphH - 16);
+    p.text("Gráfica de ε(t)", gx + 90, gy - gh - 15);
 
-    let maxFem = Math.max(0.001, Math.abs(N * B0 * A * w * Math.cos(theta)));
+    const maxFem = Math.max(0.001, Math.abs(N * B0 * A * w * Math.cos(theta)));
 
     p.stroke(239, 68, 68);
     p.strokeWeight(3);
     p.noFill();
     p.beginShape();
 
-    for (let i = 0; i <= graphW; i++) {
-      let tt = t - 4 + i / 30;
-      let femi = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * tt);
-      let y = graphY - graphH / 2 - (femi / maxFem) * (graphH / 2 - 12);
-      p.vertex(graphX + i, y);
+    for (let i = 0; i <= gw; i++) {
+      const tt = t - 4 + i / 30;
+      const femi = -N * B0 * A * w * Math.cos(theta) * Math.cos(w * tt);
+      const y = gy - gh / 2 - (femi / maxFem) * (gh / 2 - 12);
+      p.vertex(gx + i, y);
     }
 
     p.endShape();
 
     p.noStroke();
     p.fill(17, 24, 39);
-    p.text("La fem aparece porque cambia el flujo magnético.", 520, 430);
+    p.text("La fem aparece porque cambia el flujo.", 520, 430);
     p.text("Si el flujo no cambia, ε = 0.", 520, 455);
-  };
-}, "sim-faraday");
-
+  }
 </script>
 
 </body>
