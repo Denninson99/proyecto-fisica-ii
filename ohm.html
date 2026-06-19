@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ley de Ohm</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Corriente eléctrica y Ley de Ohm</h1>
+  <p>Simulación interactiva de Física II</p>
+  <div class="top-actions"><a class="btn" href="index.html">← Volver al menú</a></div>
+</header>
+
+<div class="sim-layout">
+  <div class="simulacion"><div id="canvasOhm"></div></div>
+  <div class="panel">
+    <h2>Explicación física</h2>
+    <div class="formula">I = V/R<br>P = VI</div>
+    <div class="idea">
+      El voltaje empuja las cargas y la resistencia se opone al paso de la corriente. Por eso más voltaje
+      produce más corriente y más resistencia produce menos corriente.
+    </div>
+
+    <h2>Controles</h2>
+    <div class="control"><label>Voltaje V: <span id="valorV">12</span> V</label><input id="VSlider" type="range" min="1" max="50" step="1" value="12"></div>
+    <div class="control"><label>Resistencia R: <span id="valorR">20</span> Ω</label><input id="RSlider" type="range" min="1" max="100" step="1" value="20"></div>
+
+    <div class="validacion">
+      Validación física: si aumenta V, aumenta I. Si aumenta R, disminuye I. R no puede ser cero.
+    </div>
+  </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/ohm.js"></script>
+</body>
+</html>

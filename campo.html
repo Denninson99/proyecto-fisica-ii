@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campo eléctrico</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Campo eléctrico de una carga puntual</h1>
+  <p>Simulación interactiva de Física II</p>
+  <div class="top-actions">
+    <a class="btn" href="index.html">← Volver al menú</a>
+  </div>
+</header>
+
+<div class="sim-layout">
+  <div class="simulacion">
+    <div id="canvasCampo"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Explicación física</h2>
+    <div class="formula">Fórmula: E = k |q| / r²</div>
+    <div class="idea">
+      Una carga eléctrica modifica el espacio alrededor de ella. El campo eléctrico representa
+      la fuerza que sentiría una carga de prueba por unidad de carga.
+    </div>
+
+    <h2>Controles</h2>
+    <div class="control">
+      <label>Carga q: <span id="valorQ">5</span> nC</label>
+      <input id="qSlider" type="range" min="-10" max="10" step="0.5" value="5">
+    </div>
+    <div class="control">
+      <label>Distancia r: <span id="valorR">2</span> m</label>
+      <input id="rSlider" type="range" min="0.5" max="5" step="0.1" value="2">
+    </div>
+
+    <div class="validacion">
+      Validación física: si aumenta la carga, aumenta el campo. Si aumenta la distancia,
+      el campo disminuye con 1/r². Si la carga es positiva el campo sale; si es negativa entra.
+    </div>
+  </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/campo.js"></script>
+</body>
+</html>
