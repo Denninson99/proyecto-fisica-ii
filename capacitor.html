@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capacitor de placas paralelas | Simulación</title>
+  <meta name="description" content="Simulación interactiva de un capacitor de placas paralelas.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body class="pagina-simulacion">
+  <nav class="topbar contenedor-ancho topbar-sim" aria-label="Navegación de simulación">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">FII</span>
+      <span>Simulaciones de Física</span>
+    </a>
+    <a class="topbar-link" href="index.html">← Volver al menú</a>
+  </nav>
+
+  <main class="contenedor simulacion-wrap">
+    <header class="encabezado encabezado-sim">
+      <p class="etiqueta">Electrostática · Capacitores</p>
+      <h1>Capacitor de placas paralelas</h1>
+      <p>
+        Simulación interactiva para observar cómo cambian la capacitancia, la carga almacenada
+        y el campo eléctrico al variar el área de las placas, la separación y el voltaje aplicado.
+      </p>
+    </header>
+
+    <section class="zona-principal">
+      <div class="tarjeta canvas-card">
+        <div id="canvas-container-capacitor" aria-label="Canvas de la simulación de capacitor de placas paralelas"></div>
+      </div>
+
+      <aside class="tarjeta panel-lateral">
+        <section class="bloque">
+          <h2>Controles</h2>
+
+          <label for="areaPlacas">
+            Área de placas A:
+            <span id="valorArea">2.0 m²</span>
+          </label>
+          <input id="areaPlacas" type="range" min="1" max="10" value="2" step="0.1">
+
+          <label for="distanciaPlacas">
+            Distancia d:
+            <span id="valorDistancia">0.005 m</span>
+          </label>
+          <input id="distanciaPlacas" type="range" min="0.001" max="0.05" value="0.005" step="0.001">
+
+          <label for="voltaje">
+            Voltaje V:
+            <span id="valorVoltaje">10000 V</span>
+          </label>
+          <input id="voltaje" type="range" min="1000" max="20000" value="10000" step="100">
+        </section>
+
+        <section class="bloque datos">
+          <h2>Datos calculados</h2>
+
+          <p><span>Capacitancia:</span> <strong id="datoC">---</strong></p>
+          <p><span>Carga almacenada:</span> <strong id="datoQ">---</strong></p>
+          <p><span>Campo eléctrico:</span> <strong id="datoEcap">---</strong></p>
+          <p><span>Energía almacenada:</span> <strong id="datoU">---</strong></p>
+          <p><span>Permitividad del vacío:</span> <strong>ε0 = 8.85 × 10⁻¹² F/m</strong></p>
+
+          <p id="casoCapacitor" class="caso">---</p>
+        </section>
+
+        <section class="bloque formulas">
+          <h2>Modelo físico usado</h2>
+
+          <p>Capacitancia de placas paralelas:</p>
+          <div class="formula">C = ε0 · A / d</div>
+
+          <p>Carga y campo eléctrico:</p>
+          <div class="formula">Q = C · V<br>E = V / d = Q / (ε0 · A)</div>
+
+          <p class="nota">
+            Al aumentar la distancia entre placas, la capacitancia disminuye. El capacitor almacena
+            energía en el campo eléctrico generado entre sus placas.
+          </p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="js/capacitor.js"></script>
+</body>
+</html>
