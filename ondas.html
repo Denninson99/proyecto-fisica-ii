@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ondas electromagnéticas en materiales | Simulación</title>
+  <meta name="description" content="Simulación interactiva validada con el ejemplo 32.2 de ondas electromagnéticas en diferentes materiales.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body class="pagina-simulacion">
+  <nav class="topbar contenedor-ancho topbar-sim" aria-label="Navegación de simulación">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">FII</span>
+      <span>Simulaciones de Física</span>
+    </a>
+    <a class="topbar-link" href="index.html">← Volver al menú</a>
+  </nav>
+
+  <main class="contenedor simulacion-wrap">
+    <header class="encabezado encabezado-sim">
+      <p class="etiqueta">Ondas electromagnéticas</p>
+      <h1>Ondas electromagnéticas en diferentes materiales</h1>
+      <p>
+        Simulación validada con el ejemplo 32.2 del libro: diamante con luz amarilla
+        de sodio y ferrita con una onda de radio FM. Se usa la relación
+        v = c / √(K·Km) y λ = v / f.
+      </p>
+    </header>
+
+    <section class="zona-principal">
+      <div class="tarjeta canvas-card">
+        <div id="canvas-container-ondas" aria-label="Canvas de la simulación de ondas electromagnéticas"></div>
+      </div>
+
+      <aside class="tarjeta panel-lateral">
+        <section class="bloque">
+          <h2>Controles</h2>
+
+          <label for="casoValidacionOndas">Caso de validación:</label>
+          <select id="casoValidacionOndas">
+            <option value="diamante">Ejemplo 32.2 a) Diamante</option>
+            <option value="ferrita">Ejemplo 32.2 b) Ferrita</option>
+            <option value="personalizado">Personalizado</option>
+          </select>
+
+          <label for="frecuenciaOndas">
+            Frecuencia f (Hz):
+          </label>
+          <input id="frecuenciaOndas" type="number" value="5.09e14" step="any" min="1">
+
+          <label for="constanteK">
+            Constante dieléctrica K:
+            <span id="valorK">5.84</span>
+          </label>
+          <input id="constanteK" type="range" min="1" max="100" value="5.84" step="0.01">
+
+          <label for="permeabilidadKm">
+            Permeabilidad relativa Km:
+            <span id="valorKm">1</span>
+          </label>
+          <input id="permeabilidadKm" type="range" min="1" max="2000" value="1" step="1">
+        </section>
+
+        <section class="bloque datos">
+          <h2>Datos calculados</h2>
+
+          <p><span>Longitud de onda en vacío:</span> <strong id="datoLambdaVacio">---</strong></p>
+          <p><span>Velocidad en el material:</span> <strong id="datoVelocidad">---</strong></p>
+          <p><span>Longitud de onda en material:</span> <strong id="datoLambdaMaterial">---</strong></p>
+          <p><span>Relación v/c:</span> <strong id="datoRelacion">---</strong></p>
+          <p><span>Índice equivalente:</span> <strong id="datoIndice">---</strong></p>
+          <p><span>Campo magnético:</span> <strong id="datoRelacionEB">---</strong></p>
+
+          <p id="validacionOndas" class="caso">---</p>
+        </section>
+
+        <section class="bloque formulas">
+          <h2>Modelo físico usado</h2>
+
+          <p>Longitud de onda en el vacío:</p>
+          <div class="formula">λ₀ = c / f</div>
+
+          <p>Rapidez en un material:</p>
+          <div class="formula">v = c / √(K · Km)</div>
+
+          <p>Longitud de onda en el material:</p>
+          <div class="formula">λ = v / f</div>
+
+          <p>Relación entre campos:</p>
+          <div class="formula">E = vB</div>
+
+          <p class="nota">
+            La frecuencia no cambia al entrar al material; lo que cambia es la velocidad
+            y por eso cambia la longitud de onda.
+          </p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer contenedor-ancho">
+    <p>Integrantes: Itsamith Serrano Rojas – 2023147279 · Gisella Esquivel Alvarado – 2021049504 · Denninson Ortega Brenes – 2018203896</p>
+  </footer>
+
+  <script src="js/ondas.js"></script>
+</body>
+</html>
